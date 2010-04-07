@@ -1,5 +1,10 @@
 package fileshare.gui;
 
+import javax.swing.JCheckBox;
+import javax.swing.JList;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+
 /**
  * Formulář pro nastavení.
  *
@@ -52,16 +57,36 @@ public class PanelSettings extends javax.swing.JPanel {
     scrollPaneDirs.setViewportView(listDirs);
 
     buttonAddDir.setText("Přidat");
+    buttonAddDir.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonAddDirActionPerformed(evt);
+      }
+    });
 
     buttonRemoveDir.setText("Vymazat");
+    buttonRemoveDir.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonRemoveDirActionPerformed(evt);
+      }
+    });
 
     checkAutoUpload.setText("Povolit automatický upload souborů");
 
     labelSaveDir.setText("Ukládat soubory do:");
 
     buttonChangeDir.setText("Vybrat adresář");
+    buttonChangeDir.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonChangeDirActionPerformed(evt);
+      }
+    });
 
     buttonSave.setText("Uložit");
+    buttonSave.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonSaveActionPerformed(evt);
+      }
+    });
 
     buttonClose.setText("Zavřít");
     buttonClose.addActionListener(new java.awt.event.ActionListener() {
@@ -71,6 +96,11 @@ public class PanelSettings extends javax.swing.JPanel {
     });
 
     buttonRegenerateDirs.setText("Přegenerovat seznam souborů");
+    buttonRegenerateDirs.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        buttonRegenerateDirsActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
     this.setLayout(layout);
@@ -82,26 +112,25 @@ public class PanelSettings extends javax.swing.JPanel {
           .addComponent(labelDirs)
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
             .addComponent(scrollPaneDirs, javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(checkAutoUpload)
-                  .addGroup(layout.createSequentialGroup()
-                    .addComponent(labelSaveDir)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(textSaveDir, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
-                  .addGroup(layout.createSequentialGroup()
-                    .addComponent(buttonRegenerateDirs)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(buttonAddDir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(buttonRemoveDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                  .addComponent(buttonChangeDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-              .addGroup(layout.createSequentialGroup()
-                .addComponent(buttonClose)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonSave))))
+            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(checkAutoUpload)
+                .addGroup(layout.createSequentialGroup()
+                  .addComponent(labelSaveDir)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                  .addComponent(textSaveDir, javax.swing.GroupLayout.PREFERRED_SIZE, 258, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createSequentialGroup()
+                  .addComponent(buttonRegenerateDirs)
+                  .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                  .addComponent(buttonAddDir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(buttonRemoveDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(buttonChangeDir, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+              .addComponent(buttonSave)
+              .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+              .addComponent(buttonClose)))
           .addGroup(layout.createSequentialGroup()
             .addComponent(labelPort)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -110,7 +139,7 @@ public class PanelSettings extends javax.swing.JPanel {
             .addComponent(labelHeslo)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addContainerGap(50, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,17 +168,37 @@ public class PanelSettings extends javax.swing.JPanel {
           .addComponent(labelSaveDir)
           .addComponent(textSaveDir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(buttonChangeDir))
-        .addGap(32, 32, 32)
+        .addGap(35, 35, 35)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(buttonSave)
-          .addComponent(buttonClose))
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addComponent(buttonClose)
+          .addComponent(buttonSave))
+        .addContainerGap(65, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
 
 		private void buttonCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCloseActionPerformed
 			dialogSettings.close();
 		}//GEN-LAST:event_buttonCloseActionPerformed
+
+		private void buttonAddDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAddDirActionPerformed
+			dialogSettings.addShareDir();
+		}//GEN-LAST:event_buttonAddDirActionPerformed
+
+		private void buttonChangeDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonChangeDirActionPerformed
+			dialogSettings.chooseDownloadDir();
+		}//GEN-LAST:event_buttonChangeDirActionPerformed
+
+		private void buttonRemoveDirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRemoveDirActionPerformed
+			dialogSettings.removeShareDir();
+		}//GEN-LAST:event_buttonRemoveDirActionPerformed
+
+		private void buttonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveActionPerformed
+			dialogSettings.save();
+		}//GEN-LAST:event_buttonSaveActionPerformed
+
+		private void buttonRegenerateDirsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonRegenerateDirsActionPerformed
+			dialogSettings.generateShareList();
+		}//GEN-LAST:event_buttonRegenerateDirsActionPerformed
 
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -171,4 +220,23 @@ public class PanelSettings extends javax.swing.JPanel {
   private javax.swing.JTextField textSaveDir;
   // End of variables declaration//GEN-END:variables
 
+	public JTextField getTextPort() {
+		return textPort;
+	}
+
+	public JPasswordField getPassword() {
+		return password;
+	}
+
+	public JList getListDirs() {
+		return listDirs;
+	}
+
+	public JCheckBox getCheckAutoUpload() {
+		return checkAutoUpload;
+	}
+
+	public JTextField getTextSaveDir() {
+		return textSaveDir;
+	}
 }

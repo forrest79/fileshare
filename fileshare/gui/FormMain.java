@@ -1,8 +1,10 @@
 package fileshare.gui;
 
 import fileshare.FileShare;
+import fileshare.settings.Settings;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -209,6 +211,21 @@ public class FormMain extends JFrame {
 	}
 
 	public void showDialogSettings() {
+		Settings settings = Settings.getSettings();
+
+		dialogSettings.getPanel().getTextPort().setText(String.valueOf(settings.getPort()));
+		dialogSettings.getPanel().getPassword().setText(settings.getPassword());
+
+		String[] shareDirs = settings.getShareDirs();
+
+		dialogSettings.getModelShareDirs().clear();
+		for(String dir : shareDirs) {
+			dialogSettings.getModelShareDirs().addElement(dir);
+		}
+
+		dialogSettings.getPanel().getCheckAutoUpload().setSelected(settings.isAutomaticUpload());
+		dialogSettings.getPanel().getTextSaveDir().setText(settings.getDownloadDir());
+
 		dialogSettings.setVisible(true);
 	}
 
