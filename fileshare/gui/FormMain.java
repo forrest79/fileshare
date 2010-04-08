@@ -4,7 +4,6 @@ import fileshare.FileShare;
 import fileshare.settings.Settings;
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
 

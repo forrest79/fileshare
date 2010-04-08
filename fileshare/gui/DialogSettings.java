@@ -60,15 +60,7 @@ public class DialogSettings extends JDialog {
 		try {
 			Settings settings = Settings.getSettings();
 
-			int port = 0;
-			try {
-				port = Integer.parseInt(panelSettings.getTextPort().getText());
-			} catch (Exception e) {
-				throw new Exception("Port musí být celé číslo!");
-			}
-			if ((port < 1) || (port > 10000)) {
-				throw new Exception("Port musí být celé číslo mezi 1 a 10000!");
-			}
+			settings.setPort(panelSettings.getTextPort().getText());
 
 			settings.setPassword(panelSettings.getPassword().getPassword().toString());
 
@@ -77,11 +69,19 @@ public class DialogSettings extends JDialog {
 				settings.addShareDir(modelShareDirs.get(i).toString());
 			}
 
-			settings.setPort(port);
-
 			settings.setAutomaticUpload(panelSettings.getCheckAutoUpload().isSelected());
 
 			settings.setDownloadDir(panelSettings.getTextSaveDir().getText());
+
+			if (regenerateShareDirs) {
+				if (!settings.generateShareDirsXML()) {
+					if (FileShare.DEBUG) {
+						System.err.println("Nepodařilo se vygenerovat XML se seznamem sdílených souborů...");
+					}
+				}
+
+				regenerateShareDirs = false;
+			}
 
 			if (!settings.saveToFile()) {
 				if (FileShare.DEBUG) {
@@ -122,5 +122,12 @@ public class DialogSettings extends JDialog {
 	}
 
 	public void generateShareList() {
+		if (JOptionPane.showConfirmDialog(this, "Opravdu si přejete přegenerovat seznam souborů?\nTo může chvilku trvat...", "Přegenerovat seznam souborů?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+			if (!Settings.getSettings().generateShareDirsXML()) {
+				if (FileShare.DEBUG) {
+					System.err.println("Nepodařilo se vygenerovat XML se seznamem sdílených souborů...");
+				}
+			}
+		}
 	}
 }

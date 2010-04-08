@@ -4,8 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
+ * Main window controller.
  *
- * @author Forrest79
+ * @author Jakub Trmota
  */
 class ControllerMain implements ActionListener {
 
@@ -16,8 +17,6 @@ class ControllerMain implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(e.getActionCommand());
-
 		if (e.getActionCommand().equalsIgnoreCase(FormMain.COMMAND_SEARCH)) {
 			formMain.showDialogSearch();
 		} else if (e.getActionCommand().equalsIgnoreCase(FormMain.COMMAND_USERS)) {

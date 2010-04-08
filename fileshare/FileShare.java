@@ -2,6 +2,7 @@ package fileshare;
 
 import fileshare.gui.FormMain;
 import fileshare.settings.Settings;
+import fileshare.settings.Users;
 
 /**
  *
@@ -29,7 +30,11 @@ public class FileShare {
 			}
 		}
 
-		// TODO Nacti ostatni pocitace
+		if (!Users.getUsers().loadFromFile()) {
+			if (DEBUG) {
+				System.err.println("Uživatele ze souboru se nepodařilo načíst...");
+			}
+		}
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
 				public void run() {
