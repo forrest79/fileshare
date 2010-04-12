@@ -2,6 +2,7 @@ package fileshare.gui;
 
 import fileshare.FileShare;
 import fileshare.settings.Settings;
+import fileshare.settings.Users;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
@@ -206,6 +207,15 @@ public class FormMain extends JFrame {
 	}
 
 	public void showDialogUsers() {
+		String[] usersList = Users.getUsers().getUsersArray();
+
+		dialogUsers.getPanel().getTxtPort().setText(String.valueOf(Settings.DEFAULT_PORT));
+
+		dialogUsers.getModelUsers().clear();
+		for(String user : usersList) {
+			dialogUsers.getModelUsers().addElement(user);
+		}
+
 		dialogUsers.setVisible(true);
 	}
 

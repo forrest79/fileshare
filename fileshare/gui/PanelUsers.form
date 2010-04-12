@@ -21,17 +21,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="labelPassword" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="labelName" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelIP" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelAddress" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="labelPort" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelPassword" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="textPort" min="0" pref="0" max="32767" attributes="1"/>
-                          <Component id="textIP" pref="157" max="32767" attributes="1"/>
-                          <Component id="password" alignment="0" pref="157" max="32767" attributes="1"/>
-                          <Component id="textName" alignment="0" pref="157" max="32767" attributes="1"/>
+                          <Component id="txtPort" min="0" pref="0" max="32767" attributes="1"/>
+                          <Component id="password" alignment="0" pref="153" max="32767" attributes="1"/>
+                          <Component id="txtName" alignment="0" pref="153" max="32767" attributes="1"/>
+                          <Component id="txtAddress" alignment="0" pref="153" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -62,22 +62,22 @@
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelName" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textName" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtName" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="textIP" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="labelIP" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelAddress" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtAddress" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="labelPort" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="textPort" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtPort" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="labelPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="password" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="labelPassword" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -100,18 +100,11 @@
         <Property name="text" type="java.lang.String" value="N&#xe1;zev:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="textName">
+    <Component class="javax.swing.JTextField" name="txtName">
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="textIP">
+    <Component class="javax.swing.JLabel" name="labelAddress">
       <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor" preCode="try {" postCode="} catch (java.text.ParseException ex) {&#xa;ex.printStackTrace();&#xa;}">
-          <Format format="###.###.###.###" subtype="-1" type="5"/>
-        </Property>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JLabel" name="labelIP">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="IP:"/>
+        <Property name="text" type="java.lang.String" value="Adresa:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelPort">
@@ -124,7 +117,7 @@
         <Property name="text" type="java.lang.String" value="Heslo:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="textPort">
+    <Component class="javax.swing.JTextField" name="txtPort">
     </Component>
     <Component class="javax.swing.JPasswordField" name="password">
     </Component>
@@ -140,16 +133,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Nov&#xfd;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonNewActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttonSave">
       <Properties>
         <Property name="text" type="java.lang.String" value="Ulo&#x17e;it"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSaveActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="buttonRemove">
       <Properties>
         <Property name="text" type="java.lang.String" value="Vymazat"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRemoveActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="scrollPaneUsers">
       <AuxValues>
@@ -170,8 +172,13 @@
               </StringArray>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="listUsersValueChanged"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JTextField" name="txtAddress">
+    </Component>
   </SubComponents>
 </Form>

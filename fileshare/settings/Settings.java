@@ -18,13 +18,14 @@ import java.util.ArrayList;
 public class Settings {
 
 	public static final String PASSWORD_KEY = "%@#&sdfs2673fsdf";
+	public static final int DEFAULT_PORT = 3278;
 
 	private static Settings settingsInstance = null;
 
 	private File fileSettings = null;
 	private File fileShare = null;
 
-	private int port = 3278;
+	private int port = DEFAULT_PORT;
 	private String password = "";
 	private boolean automaticUpload = true;
 	private String downloadDir = "";
@@ -78,7 +79,7 @@ public class Settings {
 								continue;
 							}
 						} else if(key.equals("password")) {
-							password = Settings.decrypt(PASSWORD_KEY, value);
+							password = Settings.decrypt(value);
 						} else if(key.equals("automaticupload")) {
 							automaticUpload = (value.equals("1"));
 						} else if(key.equals("downloaddir")) {
@@ -109,7 +110,7 @@ public class Settings {
 			BufferedWriter output = new BufferedWriter(new FileWriter(fileSettings));
 
 			output.write("Port=" + String.valueOf(port) + FileShare.NL);
-			output.write("Password=" + Settings.encrypt(PASSWORD_KEY, password) + FileShare.NL);
+			output.write("Password=" + Settings.encrypt(password) + FileShare.NL);
 			output.write("AutomaticUpload=" + (automaticUpload ? "1" : "0") + FileShare.NL);
 			output.write("DownloadDir=" + downloadDir + FileShare.NL);
 
@@ -255,7 +256,7 @@ public class Settings {
 		shareDirs.clear();
 	}
 
-	public static String encrypt(String key, String text) {
+	public static String encrypt(String text) {
 		int[] s = new int[256];
 		for (int i = 0; i < 256; i++) {
 			s[i] = i;
@@ -263,7 +264,7 @@ public class Settings {
 		int j = 0;
 		int x;
 		for (int i = 0; i < 256; i++) {
-			j = (j + s[i] + key.charAt(i % key.length())) % 256;
+			j = (j + s[i] + Settings.PASSWORD_KEY.charAt(i % Settings.PASSWORD_KEY.length())) % 256;
 			x = s[i];
 			s[i] = s[j];
 			s[j] = x;
@@ -282,7 +283,7 @@ public class Settings {
 		return sb.toString();
 	}
 
-	public static String decrypt(String key, String crypt) {
-		return encrypt(key, crypt);
+	public static String decrypt(String crypt) {
+		return encrypt(crypt);
 	}
 }
