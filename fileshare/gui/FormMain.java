@@ -6,6 +6,7 @@ import fileshare.settings.Users;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.TreeSelectionModel;
 
 /**
@@ -149,10 +150,14 @@ public class FormMain extends JFrame {
 		toolBar.add(toolBarAbout);
 
 		// COMPUTERS TREE
-		JTree treeComputers = new JTree();
-		treeComputers.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		JTree treeUsers = new JTree();
+		treeUsers.setModel(Users.getUsers().getTreeModel());
+		treeUsers.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		treeUsers.setRootVisible(false);
+		treeUsers.setCellRenderer(new TreeRendererUsers());
+		treeUsers.addTreeSelectionListener(controllerMain);
 
-		JScrollPane computersScrollPane = new JScrollPane(treeComputers);
+		JScrollPane computersScrollPane = new JScrollPane(treeUsers);
 		computersScrollPane.setMinimumSize(new Dimension(200, 200));
 
 		// FILES TABLE

@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Třída udržující nastavení, načítání z disku a ukládáná na disk a generující XML se seznamem souborů.
@@ -50,8 +52,9 @@ public class Settings {
 
 	public boolean loadFromFile() {
 		if (fileSettings.exists()) {
+			BufferedReader input = null;
 			try {
-				BufferedReader input = new BufferedReader(new FileReader(fileSettings));
+				input = new BufferedReader(new FileReader(fileSettings));
 
 				String line = "";
 
@@ -89,14 +92,16 @@ public class Settings {
 						}
 					}
 				}
-
-				input.close();
 			} catch (IOException e) {
 				if (FileShare.DEBUG) {
 					System.err.println("Settings load error: " + e.getMessage());
 				}
-
-				return false;
+			} finally {
+				try {
+					input.close();
+				} catch (IOException ex) {
+					System.err.println("Settings load error: " + ex.getMessage());
+				}
 			}
 
 			return true;
@@ -106,8 +111,9 @@ public class Settings {
 	}
 
 	public boolean saveToFile() {
+		BufferedWriter output = null;
 		try {
-			BufferedWriter output = new BufferedWriter(new FileWriter(fileSettings));
+			output = new BufferedWriter(new FileWriter(fileSettings));
 
 			output.write("Port=" + String.valueOf(port) + FileShare.NL);
 			output.write("Password=" + Settings.encrypt(password) + FileShare.NL);
@@ -117,14 +123,16 @@ public class Settings {
 			for (int i = 0; i < shareDirs.size(); i++) {
 				output.write("ShareDir=" + shareDirs.get(i) + FileShare.NL);
 			}
-			
-			output.close();
 		} catch (IOException e) {
 			if (FileShare.DEBUG) {
 				System.err.println("Settings write error: " + e.getMessage());
 			}
-
-			return false;
+		} finally {
+			try {
+				output.close();
+			} catch (IOException ex) {
+				System.err.println("Settings write error: " + ex.getMessage());
+			}
 		}
 
 		return true;

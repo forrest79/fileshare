@@ -8,6 +8,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 /**
  * Users (singleton).
@@ -22,10 +26,17 @@ public class Users {
 
 	private ArrayList<User> userList = null;
 
+	private DefaultTreeModel treeModel = null;
+
+	private DefaultMutableTreeNode rootNode = null;
+
 	private Users() {
 		fileUsers = new File(FileShare.getAppDir() + "users.ini");
 
 		userList = new ArrayList<User>();
+
+		rootNode = new DefaultMutableTreeNode("Uživatelé");
+		treeModel = new DefaultTreeModel(rootNode);
 	}
 
 	public static Users getUsers() {
@@ -38,8 +49,9 @@ public class Users {
 
 	public boolean loadFromFile() {
 		if (fileUsers.exists()) {
+			BufferedReader input = null;
 			try {
-				BufferedReader input = new BufferedReader(new FileReader(fileUsers));
+				input = new BufferedReader(new FileReader(fileUsers));
 
 				String line = "";
 
@@ -56,7 +68,7 @@ public class Users {
 
 					if (line.equalsIgnoreCase("[user]")) {
 						if (!name.isEmpty() && !address.isEmpty() && (port > 0) && !password.isEmpty()) {
-							userList.add(new User(name, address, port, password));
+							addUser(new User(name, address, port, password));
 						}
 
 						name = "";
@@ -91,17 +103,18 @@ public class Users {
 					}
 				}
 				if (!name.isEmpty() && !address.isEmpty() && (port > 0) && !password.isEmpty()) {
-					userList.add(new User(name, address, port, password));
+					addUser(new User(name, address, port, password));
 				}
-
-
-				input.close();
 			} catch (IOException e) {
 				if (FileShare.DEBUG) {
 					System.err.println("Settings load error: " + e.getMessage());
 				}
-
-				return false;
+			} finally {
+				try {
+					input.close();
+				} catch (IOException ex) {
+					Logger.getLogger(Users.class.getName()).log(Level.SEVERE, null, ex);
+				}
 			}
 
 			return true;
@@ -111,8 +124,9 @@ public class Users {
 	}
 
 	public boolean saveToFile() {
+		BufferedWriter output = null;
 		try {
-			BufferedWriter output = new BufferedWriter(new FileWriter(fileUsers));
+			output = new BufferedWriter(new FileWriter(fileUsers));
 
 			for (int i = 0; i < userList.size(); i++) {
 				User user = userList.get(i);
@@ -124,14 +138,16 @@ public class Users {
 				output.write("Password=" + Settings.encrypt(user.getPassword()) + FileShare.NL);
 				output.write(FileShare.NL);
 			}
-
-			output.close();
 		} catch (IOException e) {
 			if (FileShare.DEBUG) {
 				System.err.println("Users write error: " + e.getMessage());
 			}
-
-			return false;
+		} finally {
+			try {
+				output.close();
+			} catch (IOException ex) {
+				System.err.println("Users write error: " + ex.getMessage());
+			}
 		}
 
 		return true;
@@ -163,10 +179,17 @@ public class Users {
 
 	public void addUser(User user) {
 		userList.add(user);
+
+		DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(user.getName());
+		treeModel.insertNodeInto(childNode, rootNode, rootNode.getChildCount());
 	}
 
 	public User get(int index) {
 		return userList.get(index);
+	}
+
+	public User get(DefaultMutableTreeNode node) {
+		return get(rootNode.getIndex(node));
 	}
 
 	public void remove(int index) {
@@ -181,5 +204,9 @@ public class Users {
 		}
 
 		return users;
+	}
+
+	public DefaultTreeModel getTreeModel() {
+		return treeModel;
 	}
 }

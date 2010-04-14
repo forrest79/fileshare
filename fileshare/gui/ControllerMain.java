@@ -2,13 +2,15 @@ package fileshare.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 
 /**
  * Main window controller.
  *
  * @author Jakub Trmota
  */
-class ControllerMain implements ActionListener {
+class ControllerMain implements ActionListener, TreeSelectionListener {
 
 	private FormMain formMain = null;
 
@@ -28,4 +30,7 @@ class ControllerMain implements ActionListener {
 		}
 	}
 
+	public void valueChanged(TreeSelectionEvent e) {
+		System.out.println(e.toString());
+	}
 }

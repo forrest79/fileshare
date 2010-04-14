@@ -7,6 +7,9 @@ package fileshare.settings;
  */
 public class User {
 
+	public static final int STATUS_OFFLINE = 0;
+	public static final int STATUS_ONLINE = 1;
+
 	private String name = "";
 
 	private String address = "";
@@ -14,6 +17,8 @@ public class User {
 	private int port = Settings.DEFAULT_PORT;
 
 	private String password = "";
+
+	private int status = STATUS_OFFLINE;
 
 	public User() {
 	}
@@ -71,6 +76,18 @@ public class User {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+
+	public void setOfflineStatus() {
+		status = STATUS_OFFLINE;
+	}
+
+	public void setOnlineStatus() {
+		status = STATUS_ONLINE;
+	}
+
+	public int getStatus() {
+		return status;
 	}
 
 	@Override
