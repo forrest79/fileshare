@@ -28,6 +28,8 @@ public class Settings {
 	private int port = DEFAULT_PORT;
 	private String password = "";
 	private String downloadDir = "";
+	private int horizontalSplit = 250;
+	private int verticalSplit = 600;
 	private ArrayList<String> shareDirs = null;
 
 	private Settings() {
@@ -78,6 +80,26 @@ public class Settings {
 
 								continue;
 							}
+						} else if (key.equals("verticalsplit")) {
+							try {
+								verticalSplit = Integer.parseInt(value);
+							} catch (Exception e) {
+								if (FileShare.DEBUG) {
+									System.err.println("Port error value: " + e.getMessage());
+								}
+
+								continue;
+							}
+						} else if (key.equals("horizontalsplit")) {
+							try {
+								horizontalSplit = Integer.parseInt(value);
+							} catch (Exception e) {
+								if (FileShare.DEBUG) {
+									System.err.println("Port error value: " + e.getMessage());
+								}
+
+								continue;
+							}
 						} else if(key.equals("password")) {
 							password = Settings.decrypt(value);
 						} else if(key.equals("downloaddir")) {
@@ -113,6 +135,8 @@ public class Settings {
 			output.write("Port=" + String.valueOf(port) + FileShare.NL);
 			output.write("Password=" + Settings.encrypt(password) + FileShare.NL);
 			output.write("DownloadDir=" + downloadDir + FileShare.NL);
+			output.write("VerticalSplit=" + verticalSplit + FileShare.NL);
+			output.write("HorizontalSplit=" + horizontalSplit + FileShare.NL);
 
 			for (int i = 0; i < shareDirs.size(); i++) {
 				output.write("ShareDir=" + shareDirs.get(i) + FileShare.NL);
@@ -256,6 +280,22 @@ public class Settings {
 
 	public void setPort(int port) {
 		this.port = port;
+	}
+
+	public int getHorizontalSplit() {
+		return horizontalSplit;
+	}
+
+	public void setHorizontalSplit(int horizontalSplit) {
+		this.horizontalSplit = horizontalSplit;
+	}
+
+	public int getVerticalSplit() {
+		return verticalSplit;
+	}
+
+	public void setVerticalSplit(int verticalSplit) {
+		this.verticalSplit = verticalSplit;
 	}
 
 	public String[] getShareDirs() {

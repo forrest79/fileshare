@@ -4,10 +4,14 @@ import fileshare.FileShare;
 import fileshare.net.Server;
 import fileshare.settings.Directory;
 import fileshare.settings.OneFile;
+import fileshare.settings.Settings;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.event.TreeSelectionEvent;
@@ -18,7 +22,7 @@ import javax.swing.event.TreeSelectionListener;
  *
  * @author Jakub Trmota
  */
-class ControllerMain implements ActionListener, TreeSelectionListener, MouseListener {
+class ControllerMain implements ActionListener, TreeSelectionListener, MouseListener, PropertyChangeListener {
 
 	private FormMain formMain = null;
 
@@ -98,5 +102,16 @@ class ControllerMain implements ActionListener, TreeSelectionListener, MouseList
 
 	public void mouseExited(MouseEvent e) {
 		//throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		JSplitPane splitPane = (JSplitPane) evt.getSource();
+
+		if (splitPane.getOrientation() == JSplitPane.HORIZONTAL_SPLIT) {
+			Settings.getSettings().setHorizontalSplit(Integer.parseInt(String.valueOf(evt.getNewValue())));
+		} else {
+			Settings.getSettings().setVerticalSplit(Integer.parseInt(String.valueOf(evt.getNewValue())));
+		}
+		Settings.getSettings().saveToFile();
 	}
 }

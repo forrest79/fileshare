@@ -17,7 +17,7 @@ public class FileShare {
 	public static String SLASH = "/";
 
 	public static final String NAME = "FileShare";
-	public static final double VERSION = 0.01;
+	public static final double VERSION = 0.8;
 	public static final String EMAIL = "trmotjak@fel.cvut.cz";
 
 	private static String appPath = "";

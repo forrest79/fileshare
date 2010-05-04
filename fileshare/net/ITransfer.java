@@ -7,8 +7,6 @@ package fileshare.net;
  */
 public interface ITransfer {
 
-	public int getCompleted();
-
 	public void cancel();
 
 }

@@ -20,12 +20,12 @@ import java.net.Socket;
  *
  * @author Jakub Trmota
  */
-public class ClientDownload implements Runnable {
+public class ClientDownload implements Runnable, ITransfer {
 
 	private User user = null;
 	private OneFile file = null;
 
-	private long fileSize = 0;
+	private boolean cancel = false;
 
 	private FormMain formMain = null;
 
@@ -39,7 +39,8 @@ public class ClientDownload implements Runnable {
 		try {
 			Socket socket = new Socket(user.getAddress(), user.getPort());
 
-      File downloadFile = new File(Settings.getSettings().getDownloadDir() + FileShare.SLASH + file.getName());
+			String fileName = Transfers.getFreeDownloadFilename(Settings.getSettings().getDownloadDir() + FileShare.SLASH + file.getName());
+      File downloadFile = new File(fileName);
 			byte[] data = new byte[16384];
 			try {
 				BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -53,11 +54,22 @@ public class ClientDownload implements Runnable {
 
 				String response = input.readLine();
 				if (response.equalsIgnoreCase("ok")) {
-					fileSize = Long.parseLong(input.readLine());
+					long fileSize = Long.parseLong(input.readLine());
+
+					Transfers.getTransfers().addTransfer(Transfers.DOWNLOAD, file.getName(), fileSize, this);
 
 					int i = 0;
-					while((i = inputData.read(data)) != -1) {
+					long dataSize = 0;
+					while(((i = inputData.read(data)) != -1) && !cancel) {
 						fileOutput.write(data, 0, i);
+						dataSize += i;
+
+						Transfers.getTransfers().updateCompleted(this, (int) (((double) dataSize / (double) fileSize) * 100));
+					}
+					Transfers.getTransfers().done(this);
+
+					if (cancel) {
+						downloadFile.delete();
 					}
 				} else if (response.equalsIgnoreCase("error")) {
 					formMain.showErrorDialog("Chyba přenosu: " + user.getName(), input.readLine());
@@ -71,6 +83,10 @@ public class ClientDownload implements Runnable {
 		} catch (Exception ex) {
 			formMain.showErrorDialog("Chyba přenosu: " + user.getName(), ex.getMessage());
 		}
+	}
+
+	public void cancel() {
+		cancel = true;
 	}
 
 }

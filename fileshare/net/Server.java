@@ -19,7 +19,7 @@ public class Server {
 	private Thread clients = null;
 
 	private ServerThread serverThread = null;
-	private ClientsThread clientsThread = null;
+	private UsersThread usersThread = null;
 
 	private FormMain formMain = null;
 
@@ -42,7 +42,7 @@ public class Server {
 		isConnected = true;
 
 		serverThread = new ServerThread();
-		clientsThread = new ClientsThread(formMain);
+		usersThread = new UsersThread(formMain);
 
 		if (server == null) {
 			server = new Thread(serverThread);
@@ -51,7 +51,7 @@ public class Server {
 		server.start();
 
 		if (clients == null) {
-			clients = new Thread(clientsThread);
+			clients = new Thread(usersThread);
 		}
 		clients.setDaemon(true);
 		clients.start();
@@ -62,15 +62,17 @@ public class Server {
 			return;
 		}
 
+		Transfers.getTransfers().cancelAll();
+
 		isConnected = false;
 
 		serverThread.disconnect();
-		clientsThread.stop();
+		usersThread.stop();
 
 		serverThread = null;
 		server = null;
 
-		clientsThread = null;
+		usersThread = null;
 		clients = null;
 	}
 

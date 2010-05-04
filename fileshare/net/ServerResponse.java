@@ -19,7 +19,6 @@ import java.net.Socket;
 public class ServerResponse implements Runnable, ITransfer {
 	private Socket socket;
 
-	private int completed;
 	private boolean cancel = false;
 
 	public ServerResponse(Socket socket) {
@@ -85,8 +84,7 @@ public class ServerResponse implements Runnable, ITransfer {
 										dataSize += i;
 										output.write(data, 0, i);
 
-										completed = (int) (((double)dataSize / (double)size) * 100);
-										Transfers.getTransfers().updateCompleted(this, completed);
+										Transfers.getTransfers().updateCompleted(this, (int) (((double)dataSize / (double)size) * 100));
 									}
 									fileInput.close();
 									Transfers.getTransfers().done(this);
@@ -108,14 +106,15 @@ public class ServerResponse implements Runnable, ITransfer {
 			} else {
 				output.write("ERROR\nŠpatné heslo.".getBytes());
 			}
-		} catch (IOException ex) {
-			System.err.println(ex);
+		} catch (Exception ex) {
+			System.err.println("SR1: " + ex);
+			Transfers.getTransfers().done(this);
 		} finally {
 			if (output != null) {
 				try {
 					output.close();
-				} catch (IOException ex) {
-					System.err.println(ex);
+				} catch (Exception ex) {
+					System.err.println("SR2: " + ex);
 				}
 			}
 			try {
@@ -126,17 +125,13 @@ public class ServerResponse implements Runnable, ITransfer {
 					socket.close();
 				}
 			} catch (IOException ex) {
-				System.err.println(ex);
+				System.err.println("SR3: " + ex);
 			}
 		}
 
 		if (FileShare.DEBUG) {
 			System.out.println("Server [" + socket.getRemoteSocketAddress() + " | Client disconnect]");
 		}
-	}
-
-	public synchronized int getCompleted() {
-		return completed;
 	}
 
 	public void cancel() {

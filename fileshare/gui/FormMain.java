@@ -203,9 +203,6 @@ public class FormMain extends JFrame {
 		transferTable.getColumnModel().getColumn(3).setCellRenderer(new ProgressBarRenderer());
 		transferTable.getColumnModel().getColumn(4).setMaxWidth(100);
 		transferTable.getColumnModel().getColumn(4).setMinWidth(100);
-//    transferTable.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
-//    transferTable.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
-//    transferTable.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
 		ButtonColumn buttonColumn = new ButtonColumn(transferTable, 4);
 
 		JScrollPane transferScrollPane = new JScrollPane(transferTable);
@@ -217,10 +214,14 @@ public class FormMain extends JFrame {
 		splitPaneHorizontal.setDividerLocation(250);
 		splitPaneHorizontal.setPreferredSize(new Dimension(800, 400));
 		splitPaneHorizontal.setMinimumSize(new Dimension(100, 50));
+		splitPaneHorizontal.addPropertyChangeListener("dividerLocation", controllerMain);
+		splitPaneHorizontal.setDividerLocation(Settings.getSettings().getHorizontalSplit());
 
 		JSplitPane splitPaneVertical = new JSplitPane(JSplitPane.VERTICAL_SPLIT, splitPaneHorizontal, transferScrollPane);
 		splitPaneVertical.setOneTouchExpandable(false);
 		splitPaneVertical.setDividerLocation(600);
+		splitPaneVertical.addPropertyChangeListener("dividerLocation", controllerMain);
+		splitPaneVertical.setDividerLocation(Settings.getSettings().getVerticalSplit());
 
 		JPanel panelTop = new JPanel(new BorderLayout());
 		panelTop.add(menuBar, BorderLayout.PAGE_START);

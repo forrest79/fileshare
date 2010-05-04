@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *
  * @author Jakub Trmota
  */
-public class ClientsThread implements Runnable {
+public class UsersThread implements Runnable {
 
 	private static final int TIME = 10;
 
@@ -25,7 +25,7 @@ public class ClientsThread implements Runnable {
 
 	private FormMain formMain = null;
 
-	public ClientsThread(FormMain formMain) {
+	public UsersThread(FormMain formMain) {
 		this.formMain = formMain;
 	}
 

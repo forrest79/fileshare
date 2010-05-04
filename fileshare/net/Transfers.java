@@ -1,5 +1,6 @@
 package fileshare.net;
 
+import java.io.File;
 import java.util.ArrayList;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
@@ -71,7 +72,11 @@ public class Transfers {
 	}
 
 	public void done(ITransfer transfer) {
-		done(transfers.indexOf(transfer));
+		int index = transfers.indexOf(transfer);
+
+		if (index > -1) {
+			done(index);
+		}
 	}
 
 	public void remove(int index) {
@@ -82,6 +87,22 @@ public class Transfers {
 	public void cancelAll() {
 		for (int i = transfers.size() - 1; i >= 0; i--) {
 			transfers.get(i).cancel();
+		}
+	}
+
+	public static String getFreeDownloadFilename(String path) {
+		File file = new File(path);
+
+		if (!file.exists()) {
+			return path;
+		}
+
+		for (int i = 1; ; i++) {
+			file = new File(path + "-" + i);
+
+			if (!file.exists()) {
+				return path + "-" + i;
+			}
 		}
 	}
 }
