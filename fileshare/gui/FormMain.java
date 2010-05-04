@@ -1,12 +1,15 @@
 package fileshare.gui;
 
 import fileshare.FileShare;
+import fileshare.net.Server;
+import fileshare.net.Transfers;
+import fileshare.settings.OneFile;
 import fileshare.settings.Settings;
 import fileshare.settings.Users;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-import javax.swing.event.TreeSelectionListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.TreeSelectionModel;
 
 /**
@@ -25,6 +28,14 @@ public class FormMain extends JFrame {
 	private DialogSettings dialogSettings = null;
 	private DialogAbout dialogAbout = null;
 
+	private JMenuItem menuFileConnect = null;
+	private JMenuItem menuFileDisconnect = null;
+	private JButton toolBarConnect = null;
+	private JButton toolBarDisconnect = null;
+
+	private TableModelFiles tableModelFiles = null;
+	private TableModelTransfer tableModelTransfer = null;
+
 	public static final String COMMAND_CONNECT = "connect";
 	public static final String COMMAND_DISCONNECT = "disconnect";
 	public static final String COMMAND_SEARCH = "search";
@@ -34,6 +45,10 @@ public class FormMain extends JFrame {
 	public static final String COMMAND_ABOUT = "about";
 
 	public FormMain() throws HeadlessException {
+		// MODELS
+		tableModelFiles = new TableModelFiles();
+		tableModelTransfer = new TableModelTransfer();
+
 		// DIALOGS
 		dialogSearch = new DialogSearch(this, true);
 		dialogUsers = new DialogUsers(this, true);
@@ -52,14 +67,15 @@ public class FormMain extends JFrame {
 		JMenu menuFile = new JMenu("Soubor");
 		menuFile.setMnemonic(KeyEvent.VK_S);
 
-		JMenuItem menuFileConnect = new JMenuItem("Připojit", KeyEvent.VK_P);
+		menuFileConnect = new JMenuItem("Připojit", KeyEvent.VK_P);
 		menuFileConnect.setActionCommand(COMMAND_CONNECT);
 		menuFileConnect.addActionListener(controllerMain);
 		menuFile.add(menuFileConnect);
 
-		JMenuItem menuFileDisconnect = new JMenuItem("Odpojit", KeyEvent.VK_O);
+		menuFileDisconnect = new JMenuItem("Odpojit", KeyEvent.VK_O);
 		menuFileDisconnect.setActionCommand(COMMAND_DISCONNECT);
 		menuFileDisconnect.addActionListener(controllerMain);
+		menuFileDisconnect.setVisible(false);
 		menuFile.add(menuFileDisconnect);
 
 		menuFile.addSeparator();
@@ -103,18 +119,19 @@ public class FormMain extends JFrame {
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 
-		JButton toolBarConnect = new JButton();
+		toolBarConnect = new JButton();
 		toolBarConnect.setActionCommand(COMMAND_CONNECT);
 		toolBarConnect.setToolTipText("Připojit");
 		toolBarConnect.addActionListener(controllerMain);
 		toolBarConnect.setIcon(new ImageIcon(getClass().getResource("icon/icon-connect.png"), "Připojit"));
 		toolBar.add(toolBarConnect);
 
-		JButton toolBarDisconnect = new JButton();
+		toolBarDisconnect = new JButton();
 		toolBarDisconnect.setActionCommand(COMMAND_DISCONNECT);
 		toolBarDisconnect.setToolTipText("Odpojit");
 		toolBarDisconnect.addActionListener(controllerMain);
 		toolBarDisconnect.setIcon(new ImageIcon(getClass().getResource("icon/icon-disconnect.png"), "Odpojit"));
+		toolBarDisconnect.setVisible(false);
 		toolBar.add(toolBarDisconnect);
 
 		toolBar.addSeparator();
@@ -161,10 +178,12 @@ public class FormMain extends JFrame {
 		computersScrollPane.setMinimumSize(new Dimension(200, 200));
 
 		// FILES TABLE
-		JTable filesTable = new JTable(new TableModelFiles());
+		JTable filesTable = new JTable(tableModelFiles);
 		filesTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
 		filesTable.setFillsViewportHeight(true);
 		filesTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		filesTable.getTableHeader().setReorderingAllowed(false);
+		filesTable.addMouseListener(controllerMain);
 
 		filesTable.getColumnModel().getColumn(1).setMaxWidth(200);
 
@@ -172,18 +191,22 @@ public class FormMain extends JFrame {
 		filesScrollPane.setMinimumSize(new Dimension(300, 200));
 
 		// TRANSFER TABLE
-		JTable transferTable = new JTable(new TableModelTransfer());
+		JTable transferTable = new JTable(tableModelTransfer);
 		transferTable.setPreferredScrollableViewportSize(new Dimension(800, 200));
 		transferTable.setFillsViewportHeight(true);
 		transferTable.setShowVerticalLines(false);
 		transferTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		transferTable.getTableHeader().setReorderingAllowed(false);
 
 		transferTable.getColumnModel().getColumn(0).setMaxWidth(25);
 		transferTable.getColumnModel().getColumn(0).setCellRenderer(new IconRenderer());
 		transferTable.getColumnModel().getColumn(3).setCellRenderer(new ProgressBarRenderer());
-		transferTable.getColumnModel().getColumn(5).setMaxWidth(100);
-    transferTable.getColumnModel().getColumn(5).setCellRenderer(new ButtonRenderer());
-    transferTable.getColumnModel().getColumn(5).setCellEditor(new ButtonEditor(new JCheckBox()));
+		transferTable.getColumnModel().getColumn(4).setMaxWidth(100);
+		transferTable.getColumnModel().getColumn(4).setMinWidth(100);
+//    transferTable.getColumnModel().getColumn(4).setCellRenderer(new ButtonRenderer());
+//    transferTable.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
+//    transferTable.getColumnModel().getColumn(4).setCellEditor(new ButtonEditor(new JCheckBox()));
+		ButtonColumn buttonColumn = new ButtonColumn(transferTable, 4);
 
 		JScrollPane transferScrollPane = new JScrollPane(transferTable);
 		transferScrollPane.setMinimumSize(new Dimension(800, 150));
@@ -205,6 +228,16 @@ public class FormMain extends JFrame {
 
 		getContentPane().add(panelTop, BorderLayout.PAGE_START);
 		getContentPane().add(splitPaneVertical, BorderLayout.CENTER);
+
+		// TRANSFERS
+		Transfers.getTransfers().setTableModel(tableModelTransfer);
+	}
+
+	public void showFiles(OneFile[] files) {
+		tableModelFiles.setNumRows(0);
+		for (int i = 0; i < files.length; i++) {
+			tableModelFiles.addRow(new Object[] {files[i].getName(), String.valueOf((files[i].getSize() / 1024)) + " kB"});
+		}
 	}
 
 	public void showDialogSearch() {
@@ -227,8 +260,8 @@ public class FormMain extends JFrame {
 	public void showDialogSettings() {
 		Settings settings = Settings.getSettings();
 
-		dialogSettings.getPanel().getTextPort().setText(String.valueOf(settings.getPort()));
-		dialogSettings.getPanel().getPassword().setText(settings.getPassword());
+		dialogSettings.getPanel().getTxtPort().setText(String.valueOf(settings.getPort()));
+		dialogSettings.getPanel().getTxtPassword().setText(settings.getPassword());
 
 		String[] shareDirs = settings.getShareDirs();
 
@@ -237,14 +270,33 @@ public class FormMain extends JFrame {
 			dialogSettings.getModelShareDirs().addElement(dir);
 		}
 
-		dialogSettings.getPanel().getCheckAutoUpload().setSelected(settings.isAutomaticUpload());
-		dialogSettings.getPanel().getTextSaveDir().setText(settings.getDownloadDir());
+		dialogSettings.getPanel().getTxtSaveDir().setText(settings.getDownloadDir());
 
 		dialogSettings.setVisible(true);
 	}
 
 	public void showDialogAbout() {
 		dialogAbout.setVisible(true);
+	}
+
+	public void connect() {
+		menuFileDisconnect.setVisible(true);
+		menuFileConnect.setVisible(false);
+
+		toolBarDisconnect.setVisible(true);
+		toolBarConnect.setVisible(false);
+	}
+
+	public void disconnect() {
+		menuFileConnect.setVisible(true);
+		menuFileDisconnect.setVisible(false);
+
+		toolBarConnect.setVisible(true);
+		toolBarDisconnect.setVisible(false);
+	}
+
+	public void showErrorDialog(String title, String message) {
+		JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
 	}
 
 	public void setFormTitle() {
@@ -267,6 +319,8 @@ public class FormMain extends JFrame {
 		formMain.setContentPane(this.getContentPane());
 
 		setFormTitle();
+
+		Server.getServer().setFormMain(this);
 
 		formMain.setVisible(true);
 	}

@@ -29,7 +29,6 @@ public class PanelUsers extends javax.swing.JPanel {
     labelPort = new javax.swing.JLabel();
     labelPassword = new javax.swing.JLabel();
     txtPort = new javax.swing.JTextField();
-    password = new javax.swing.JPasswordField();
     buttonClose = new javax.swing.JToggleButton();
     buttonNew = new javax.swing.JButton();
     buttonSave = new javax.swing.JButton();
@@ -37,6 +36,7 @@ public class PanelUsers extends javax.swing.JPanel {
     scrollPaneUsers = new javax.swing.JScrollPane();
     listUsers = new javax.swing.JList();
     txtAddress = new javax.swing.JTextField();
+    txtPassword = new javax.swing.JTextField();
 
     labelName.setText("Název:");
 
@@ -102,9 +102,9 @@ public class PanelUsers extends javax.swing.JPanel {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(txtPort, 0, 0, Short.MAX_VALUE)
-              .addComponent(password, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
               .addComponent(txtName, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
-              .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)))
+              .addComponent(txtAddress, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+              .addComponent(txtPassword, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)))
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
               .addComponent(buttonClose, javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,8 +138,8 @@ public class PanelUsers extends javax.swing.JPanel {
               .addComponent(txtPort, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-              .addComponent(password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(labelPassword))
+              .addComponent(labelPassword)
+              .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(buttonNew)
@@ -182,10 +182,10 @@ public class PanelUsers extends javax.swing.JPanel {
   private javax.swing.JLabel labelPassword;
   private javax.swing.JLabel labelPort;
   private javax.swing.JList listUsers;
-  private javax.swing.JPasswordField password;
   private javax.swing.JScrollPane scrollPaneUsers;
   private javax.swing.JTextField txtAddress;
   private javax.swing.JTextField txtName;
+  private javax.swing.JTextField txtPassword;
   private javax.swing.JTextField txtPort;
   // End of variables declaration//GEN-END:variables
 
@@ -201,8 +201,8 @@ public class PanelUsers extends javax.swing.JPanel {
 		return txtPort;
 	}
 
-	public JPasswordField getPassword() {
-		return password;
+	public JTextField getTxtPassword() {
+		return txtPassword;
 	}
 
 	public JList getListUsers() {

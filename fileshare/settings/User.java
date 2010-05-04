@@ -1,5 +1,7 @@
 package fileshare.settings;
 
+import java.util.ArrayList;
+
 /**
  * User - one user.
  *
@@ -20,6 +22,8 @@ public class User {
 
 	private int status = STATUS_OFFLINE;
 
+	private ArrayList<Directory> directories = null;
+
 	public User() {
 	}
 
@@ -28,6 +32,8 @@ public class User {
 		this.address = address;
 		this.port = port;
 		this.password = password;
+
+		directories = new ArrayList<Directory>();
 	}
 
 	public String getAddress() {
@@ -86,8 +92,16 @@ public class User {
 		status = STATUS_ONLINE;
 	}
 
-	public int getStatus() {
-		return status;
+	public boolean isOnline() {
+		return status == STATUS_ONLINE;
+	}
+
+	public boolean isOffline() {
+		return status == STATUS_OFFLINE;
+	}
+
+	public void addDirectory(Directory directory) {
+		directories.add(directory);
 	}
 
 	@Override

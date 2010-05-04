@@ -43,7 +43,7 @@ public class DialogUsers extends JDialog {
 		panelUsers.getTxtName().setText("");
 		panelUsers.getTxtAddress().setText("");
 		panelUsers.getTxtPort().setText(String.valueOf(Settings.DEFAULT_PORT));
-		panelUsers.getPassword().setText("");
+		panelUsers.getTxtPassword().setText("");
 	}
 
 	public void save() {
@@ -62,7 +62,8 @@ public class DialogUsers extends JDialog {
 				user.setName(panelUsers.getTxtName().getText());
 				user.setAddress(panelUsers.getTxtAddress().getText());
 				user.setPort(panelUsers.getTxtPort().getText());
-				user.setPassword(panelUsers.getPassword().getPassword().toString());
+				System.out.println(panelUsers.getTxtPassword().getText());
+				user.setPassword(panelUsers.getTxtPassword().getText());
 
 				if (edit == -1) {
 					users.addUser(user);
@@ -96,7 +97,7 @@ public class DialogUsers extends JDialog {
 			panelUsers.getTxtName().setText(user.getName());
 			panelUsers.getTxtAddress().setText(user.getAddress());
 			panelUsers.getTxtPort().setText(String.valueOf(user.getPort()));
-			panelUsers.getPassword().setText(user.getPassword());
+			panelUsers.getTxtPassword().setText(user.getPassword());
 		}
 	}
 
@@ -105,6 +106,12 @@ public class DialogUsers extends JDialog {
 			modelUsers.remove(edit);
 			Users.getUsers().remove(edit);
 			edit = -1;
+
+			if (!Users.getUsers().saveToFile()) {
+				if (FileShare.DEBUG) {
+					System.err.println("Uživatele se nepodařilo vymazat ze souboru...");
+				}
+			}
 
 			blank();
 		}

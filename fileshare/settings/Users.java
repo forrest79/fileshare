@@ -7,11 +7,19 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 /**
  * Users (singleton).
@@ -194,6 +202,8 @@ public class Users {
 
 	public void remove(int index) {
 		userList.remove(index);
+
+		treeModel.removeNodeFromParent((DefaultMutableTreeNode) rootNode.getChildAt(index));
 	}
 
 	public String[] getUsersArray() {
@@ -206,7 +216,71 @@ public class Users {
 		return users;
 	}
 
+	public ArrayList<User> getUsersList() {
+		return userList;
+	}
+
 	public DefaultTreeModel getTreeModel() {
 		return treeModel;
+	}
+
+	public void reloadTreeView(int userIndex) {
+		treeModel.reload(rootNode.getChildAt(userIndex));
+	}
+
+	public void reloadTreeView() {
+		treeModel.reload();
+	}
+
+	public void parseShareDirsXml(int userIndex, String xml) {
+		User user = userList.get(userIndex);
+		try {
+			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+			InputSource inStream = new InputSource();
+			inStream.setCharacterStream(new StringReader(xml));
+
+			Document doc = builder.parse(inStream);
+
+			NodeList nodes = doc.getElementsByTagName("share").item(0).getChildNodes();
+			for (int i = 0; i < nodes.getLength(); i++) {
+
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode) rootNode.getChildAt(userIndex);
+				Directory dir = new Directory(nodes.item(i).getAttributes().getNamedItem("name").getNodeValue(), user);
+
+				treeModel.insertNodeInto(dir, node, node.getChildCount());
+
+				parseDir(dir, nodes.item(i), user);
+			}
+		} catch (Exception e) {
+			if (FileShare.DEBUG) {
+				System.err.println(e);
+			}
+		}
+	}
+
+	private void parseDir(Directory dir, Node node, User user) {
+		NodeList nodes = node.getChildNodes();
+
+		for (int i = 0; i < nodes.getLength(); i++) {
+			Node subNode = nodes.item(i);
+
+			if (subNode.getNodeName().equalsIgnoreCase("dir")) {
+				Directory subDir = new Directory(subNode.getAttributes().getNamedItem("name").getNodeValue(), user);
+
+				treeModel.insertNodeInto(subDir, dir, dir.getChildCount());
+
+				parseDir(subDir, subNode, user);
+			} else if (subNode.getNodeName().equalsIgnoreCase("file")) {
+				dir.addFile(subNode.getAttributes().getNamedItem("name").getNodeValue(), subNode.getAttributes().getNamedItem("path").getNodeValue(), Integer.parseInt(subNode.getAttributes().getNamedItem("size").getNodeValue()));
+			}
+		}
+	}
+
+	public void removeDirsFromTree(int index) {
+		DefaultMutableTreeNode node = (DefaultMutableTreeNode) rootNode.getChildAt(index);
+
+		while (node.getChildCount() > 0) {
+			treeModel.removeNodeFromParent((DefaultMutableTreeNode) node.getChildAt(0));
+		}
 	}
 }

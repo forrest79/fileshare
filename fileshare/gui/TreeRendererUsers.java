@@ -1,6 +1,5 @@
 package fileshare.gui;
 
-import fileshare.settings.User;
 import fileshare.settings.Users;
 import java.awt.Component;
 import javax.swing.ImageIcon;
@@ -34,13 +33,13 @@ public class TreeRendererUsers extends DefaultTreeCellRenderer {
 
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
 
-		if (node.getDepth() == 0) { // Uživatel
-			if (Users.getUsers().get(node).getStatus() == User.STATUS_OFFLINE) {
+		if (node.getLevel() == 1) { // Uživatel
+			if (Users.getUsers().get(node).isOffline()) {
 				setIcon(iconOffline);
-			} else if(Users.getUsers().get(node).getStatus() == User.STATUS_ONLINE) {
+			} else if(Users.getUsers().get(node).isOnline()) {
 				setIcon(iconOnline);
 			}
-		} else { // Složka
+		} else if (node.getLevel() > 1) { // Složka
 			setIcon(iconFolder);
 		}
 		return this;

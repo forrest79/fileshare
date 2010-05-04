@@ -9,8 +9,6 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Třída udržující nastavení, načítání z disku a ukládáná na disk a generující XML se seznamem souborů.
@@ -29,7 +27,6 @@ public class Settings {
 
 	private int port = DEFAULT_PORT;
 	private String password = "";
-	private boolean automaticUpload = true;
 	private String downloadDir = "";
 	private ArrayList<String> shareDirs = null;
 
@@ -83,8 +80,6 @@ public class Settings {
 							}
 						} else if(key.equals("password")) {
 							password = Settings.decrypt(value);
-						} else if(key.equals("automaticupload")) {
-							automaticUpload = (value.equals("1"));
 						} else if(key.equals("downloaddir")) {
 							downloadDir = value;
 						} else if(key.equals("sharedir")) {
@@ -117,7 +112,6 @@ public class Settings {
 
 			output.write("Port=" + String.valueOf(port) + FileShare.NL);
 			output.write("Password=" + Settings.encrypt(password) + FileShare.NL);
-			output.write("AutomaticUpload=" + (automaticUpload ? "1" : "0") + FileShare.NL);
 			output.write("DownloadDir=" + downloadDir + FileShare.NL);
 
 			for (int i = 0; i < shareDirs.size(); i++) {
@@ -138,12 +132,14 @@ public class Settings {
 		return true;
 	}
 
-	public boolean generateShareDirsXML() {
-		String xml = "";
+	public boolean generateShareDirsXml() {
+		String xml = "<share>";
 
 		for (int i = 0; i < shareDirs.size(); i++) {
-			xml += listDir(new File(shareDirs.get(i)), 0);
+			xml += listDir(new File(shareDirs.get(i)));
 		}
+
+		xml += "</share>";
 
 		try {
 			BufferedWriter output = new BufferedWriter(new FileWriter(fileShare));
@@ -162,7 +158,36 @@ public class Settings {
 		return true;
 	}
 
-	private String listDir(File dir, int tabs) {
+	public String getShareDirsXml() {
+		String xml = "";
+
+		if (fileShare.exists()) {
+			BufferedReader input = null;
+			try {
+				input = new BufferedReader(new FileReader(fileShare));
+
+				String line = "";
+
+				while ((line = input.readLine()) != null) {
+					xml += line;
+				}
+			} catch (IOException e) {
+				if (FileShare.DEBUG) {
+					System.err.println("Share dirs load error: " + e.getMessage());
+				}
+			} finally {
+				try {
+					input.close();
+				} catch (IOException ex) {
+					System.err.println("Share dirs load error: " + ex.getMessage());
+				}
+			}
+		}
+		
+		return xml;
+	}
+
+	private String listDir(File dir) {
 		if (!dir.isDirectory() || !dir.exists()) {
 			return "";
 		}
@@ -173,12 +198,7 @@ public class Settings {
 			}
 		};
 
-		String tab = "";
-		for (int t = 0; t < tabs; t++) {
-			tab += "\t";
-		}
-
-		String xml = tab + "<dir path=\"" + dir.getPath() + "\" name=\"" + dir.getName() + "\">\n";
+		String xml = "<dir name=\"" + dir.getName() + "\">";
 
 		File[] files = dir.listFiles(filter);
 		if (files != null) {
@@ -186,24 +206,16 @@ public class Settings {
 				File one = files[x];
 
 				if (one.isDirectory()) {
-					xml += listDir(one, tabs + 1);
+					xml += listDir(one);
 				} else {
-					xml += tab + "\t<file name=\"" + one.getName() + "\" size=\"" + one.length() + "\">\n";
+					xml += "<file path=\"" + one.getPath() + "\" name=\"" + one.getName() + "\" size=\"" + one.length() + "\" />";
 				}
 			}
 		}
 
-		xml += tab + "</dir>\n";
+		xml += "</dir>";
 
 		return xml;
-	}
-
-	public boolean isAutomaticUpload() {
-		return automaticUpload;
-	}
-
-	public void setAutomaticUpload(boolean automaticUpload) {
-		this.automaticUpload = automaticUpload;
 	}
 
 	public String getDownloadDir() {
@@ -254,6 +266,16 @@ public class Settings {
 		}
 
 		return dirs;
+	}
+
+	public boolean isShareDir(String dir) {
+		for (int i = 0; i < shareDirs.size(); i++) {
+			if (dir.startsWith(shareDirs.get(i))) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	public void addShareDir(String dir) throws Exception {

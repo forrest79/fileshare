@@ -1,32 +1,33 @@
 package fileshare.gui;
 
-import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Model pro tabulku transferu.
  *
  * @author Jakub Trmota
  */
-class TableModelFiles extends AbstractTableModel {
+class TableModelFiles extends DefaultTableModel {
 
 	private String[] columnNames = {"Soubor", "Velikost"};
-	private Object[][] data = {{"vsechno.mp3", "4,43 MB"}, {"neco.mp3", "0,23 MB"}};
 
-	public int getColumnCount() {
-		return columnNames.length;
+	public TableModelFiles() {
+		super(0, 2);
 	}
 
-	public int getRowCount() {
-		return data.length;
+	@Override
+	public boolean isCellEditable(int row, int column) {
+		return false;
+	}
+
+	@Override
+	public int getColumnCount() {
+		return columnNames.length;
 	}
 
 	@Override
 	public String getColumnName(int column) {
 		return columnNames[column];
-	}
-
-	public Object getValueAt(int row, int column) {
-		return data[row][column];
 	}
 
 	@Override
