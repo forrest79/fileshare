@@ -1,6 +1,5 @@
 package fileshare.gui;
 
-import javax.swing.JCheckBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
 
@@ -133,7 +132,7 @@ public class PanelSettings extends javax.swing.JPanel {
               .addComponent(buttonSave)
               .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
               .addComponent(buttonClose))))
-        .addContainerGap(50, Short.MAX_VALUE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,7 +163,7 @@ public class PanelSettings extends javax.swing.JPanel {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(buttonClose)
           .addComponent(buttonSave))
-        .addContainerGap(79, Short.MAX_VALUE))
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
     );
   }// </editor-fold>//GEN-END:initComponents
 

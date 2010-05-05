@@ -1,7 +1,6 @@
 package fileshare.net;
 
 import fileshare.FileShare;
-import fileshare.gui.FormMain;
 import fileshare.settings.Settings;
 import java.io.IOException;
 import java.net.InetAddress;

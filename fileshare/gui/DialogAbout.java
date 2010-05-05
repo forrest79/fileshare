@@ -36,7 +36,7 @@ public class DialogAbout extends JDialog {
 				Desktop.getDesktop().mail(new URI("mailto", FileShare.EMAIL, null));
 			} catch(Exception e) {
 				if (FileShare.DEBUG) {
-					e.printStackTrace();
+					System.err.println(e);
 				}
 			}
 		}

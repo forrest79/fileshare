@@ -342,7 +342,7 @@ public class Settings {
 		try {
 			return new String(dec.decodeBuffer(text), "UTF-8");
 		}
-		catch (IOException e) {
+		catch (Exception e) {
 			return null;
 		}
 	}

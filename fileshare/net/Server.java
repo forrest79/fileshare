@@ -2,8 +2,6 @@ package fileshare.net;
 
 import fileshare.gui.FormMain;
 import fileshare.settings.OneFile;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Implementace serveru (Singleton).

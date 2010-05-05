@@ -11,13 +11,13 @@ import fileshare.settings.Users;
  */
 public class FileShare {
 
-	public static final boolean DEBUG = true;
+	public static final boolean DEBUG = false;
 
 	public static final String NL = System.getProperty("line.separator");
 	public static String SLASH = "/";
 
 	public static final String NAME = "FileShare";
-	public static final double VERSION = 0.8;
+	public static final double VERSION = 0.99;
 	public static final String EMAIL = "trmotjak@fel.cvut.cz";
 
 	private static String appPath = "";

@@ -2,7 +2,6 @@ package fileshare.net;
 
 import java.io.File;
 import java.util.ArrayList;
-import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 /**

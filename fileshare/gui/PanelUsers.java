@@ -1,7 +1,6 @@
 package fileshare.gui;
 
 import javax.swing.JList;
-import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /**
