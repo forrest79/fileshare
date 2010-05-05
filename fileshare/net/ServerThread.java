@@ -1,6 +1,7 @@
 package fileshare.net;
 
 import fileshare.FileShare;
+import fileshare.gui.FormMain;
 import fileshare.settings.Settings;
 import java.io.IOException;
 import java.net.InetAddress;
@@ -19,14 +20,14 @@ public class ServerThread implements Runnable {
 
 	private ServerSocket server;
 
-	public ServerThread() {
+	public ServerThread() throws Exception {
 		try {
 			server = new ServerSocket(Settings.getSettings().getPort());
 			if (FileShare.DEBUG) {
 				System.out.println("Server connect - " + InetAddress.getLocalHost() + ":" + Settings.getSettings().getPort());
 			}
-		} catch (IOException ex) {
-			System.err.println(ex);
+		} catch (Exception ex) {
+			throw ex;
 		}
 	}
 

@@ -2,7 +2,8 @@ package fileshare.net;
 
 import fileshare.gui.FormMain;
 import fileshare.settings.OneFile;
-import fileshare.settings.User;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementace serveru (Singleton).
@@ -40,8 +41,11 @@ public class Server {
 		}
 
 		isConnected = true;
-
-		serverThread = new ServerThread();
+		try {
+			serverThread = new ServerThread();
+		} catch (Exception ex) {
+			disconnect();
+		}
 		usersThread = new UsersThread(formMain);
 
 		if (server == null) {
@@ -84,8 +88,8 @@ public class Server {
 		this.formMain = formMain;
 	}
 
-	public void download(User user, OneFile file) {
-		ClientDownload clientDownload = new ClientDownload(user, file, formMain);
+	public void download(OneFile file) {
+		ClientDownload clientDownload = new ClientDownload(file, formMain);
 		Thread downloadFile = new Thread(clientDownload);
 		
 		downloadFile.setDaemon(true);

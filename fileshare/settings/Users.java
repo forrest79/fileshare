@@ -11,9 +11,9 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -38,6 +38,8 @@ public class Users {
 
 	private DefaultMutableTreeNode rootNode = null;
 
+	private ArrayList<OneFile> searchList = null;
+
 	private Users() {
 		fileUsers = new File(FileShare.getAppDir() + "users.ini");
 
@@ -45,6 +47,8 @@ public class Users {
 
 		rootNode = new DefaultMutableTreeNode("Uživatelé");
 		treeModel = new DefaultTreeModel(rootNode);
+
+		searchList = new ArrayList<OneFile>();
 	}
 
 	public static Users getUsers() {
@@ -190,6 +194,8 @@ public class Users {
 
 		DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(user.getName());
 		treeModel.insertNodeInto(childNode, rootNode, rootNode.getChildCount());
+
+		reloadTreeView();
 	}
 
 	public User get(int index) {
@@ -204,6 +210,8 @@ public class Users {
 		userList.remove(index);
 
 		treeModel.removeNodeFromParent((DefaultMutableTreeNode) rootNode.getChildAt(index));
+
+		reloadTreeView();
 	}
 
 	public String[] getUsersArray() {
@@ -233,6 +241,10 @@ public class Users {
 	}
 
 	public void parseShareDirsXml(int userIndex, String xml) {
+		if (xml.isEmpty()) {
+			return;
+		}
+
 		User user = userList.get(userIndex);
 		try {
 			DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -243,7 +255,6 @@ public class Users {
 
 			NodeList nodes = doc.getElementsByTagName("share").item(0).getChildNodes();
 			for (int i = 0; i < nodes.getLength(); i++) {
-
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode) rootNode.getChildAt(userIndex);
 				Directory dir = new Directory(nodes.item(i).getAttributes().getNamedItem("name").getNodeValue(), user);
 
@@ -271,7 +282,7 @@ public class Users {
 
 				parseDir(subDir, subNode, user);
 			} else if (subNode.getNodeName().equalsIgnoreCase("file")) {
-				dir.addFile(subNode.getAttributes().getNamedItem("name").getNodeValue(), subNode.getAttributes().getNamedItem("path").getNodeValue(), Integer.parseInt(subNode.getAttributes().getNamedItem("size").getNodeValue()));
+				dir.addFile(subNode.getAttributes().getNamedItem("name").getNodeValue(), subNode.getAttributes().getNamedItem("path").getNodeValue(), Long.parseLong(subNode.getAttributes().getNamedItem("size").getNodeValue()), user);
 			}
 		}
 	}
@@ -282,5 +293,40 @@ public class Users {
 		while (node.getChildCount() > 0) {
 			treeModel.removeNodeFromParent((DefaultMutableTreeNode) node.getChildAt(0));
 		}
+	}
+
+	public void search(String search, DefaultTableModel defaultTableModel) {
+		defaultTableModel.setRowCount(0);
+		searchList.clear();
+
+		for (int i = 0; i < rootNode.getChildCount(); i++) {
+			searchDir(search, (DefaultMutableTreeNode) rootNode.getChildAt(i));
+		}
+
+		for (int i = 0; i < searchList.size(); i++) {
+			OneFile file = searchList.get(i);
+			defaultTableModel.addRow(new Object[] {file.getUser().getName(), file.getName(), String.valueOf(file.getSize() / 1024) + " kB"});
+		}
+	}
+
+	private void searchDir(String search, DefaultMutableTreeNode node) {
+		if (node instanceof Directory) {
+			Directory dir = (Directory) node;
+			ArrayList<OneFile> files = dir.getFilesList();
+
+			for (int i = 0; i < files.size(); i++) {
+				if (files.get(i).getName().toLowerCase().contains(search.toLowerCase())) {
+					searchList.add(files.get(i));
+				}
+			}
+		}
+
+		for (int i = 0; i < node.getChildCount(); i++) {
+			searchDir(search, (DefaultMutableTreeNode) node.getChildAt(i));
+		}
+	}
+
+	public OneFile getSearch(int index) {
+		return searchList.get(index);
 	}
 }

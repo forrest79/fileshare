@@ -84,7 +84,7 @@ class ControllerMain implements ActionListener, TreeSelectionListener, MouseList
 		if (e.getClickCount() == 2) {
 			JTable target = (JTable) e.getSource();
 
-			Server.getServer().download(dir.getUser(), dir.getFile(target.getSelectedRow()));
+			Server.getServer().download(dir.getFile(target.getSelectedRow()));
 		}
 	}
 

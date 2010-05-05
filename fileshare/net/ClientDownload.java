@@ -4,14 +4,11 @@ import fileshare.FileShare;
 import fileshare.gui.FormMain;
 import fileshare.settings.OneFile;
 import fileshare.settings.Settings;
-import fileshare.settings.User;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 
@@ -22,66 +19,96 @@ import java.net.Socket;
  */
 public class ClientDownload implements Runnable, ITransfer {
 
-	private User user = null;
 	private OneFile file = null;
 
 	private boolean cancel = false;
 
 	private FormMain formMain = null;
 
-	public ClientDownload(User user, OneFile file, FormMain formMain) {
-		this.user = user;
+	public ClientDownload(OneFile file, FormMain formMain) {
 		this.file = file;
 		this.formMain = formMain;
 	}
 
 	public void run() {
 		try {
-			Socket socket = new Socket(user.getAddress(), user.getPort());
+			Socket socket = new Socket(file.getUser().getAddress(), file.getUser().getPort());
 
 			String fileName = Transfers.getFreeDownloadFilename(Settings.getSettings().getDownloadDir() + FileShare.SLASH + file.getName());
       File downloadFile = new File(fileName);
 			byte[] data = new byte[16384];
 			try {
-				BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 				BufferedInputStream inputData = new BufferedInputStream(socket.getInputStream());
 				BufferedWriter output = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 				BufferedOutputStream fileOutput = new BufferedOutputStream(new FileOutputStream(downloadFile));
 
 				output.write("GET " + file.getPath() + "\n");
-				output.write(Settings.decrypt(Settings.getSettings().getPassword()) + "\n");
+				output.write(Settings.encrypt(file.getUser().getPassword()) + "\n");
 				output.flush();
 
-				String response = input.readLine();
-				if (response.equalsIgnoreCase("ok")) {
-					long fileSize = Long.parseLong(input.readLine());
+				long fileSize = 0;
 
-					Transfers.getTransfers().addTransfer(Transfers.DOWNLOAD, file.getName(), fileSize, this);
+				int i = 0;
+				long dataSize = 0;
+				boolean readResponse = true;
+				boolean error = false;
+				while(((i = inputData.read(data)) != -1) && !cancel) {
+					if (readResponse) {
+						readResponse = false;
+						if ((data[0] == 79) && (data[1] == 75)) {
+							int eol = data[2];
 
-					int i = 0;
-					long dataSize = 0;
-					while(((i = inputData.read(data)) != -1) && !cancel) {
-						fileOutput.write(data, 0, i);
-						dataSize += i;
+							String size = "";
+							int x = 0;
+							for (x = 3; x < i; x++) {
+								if (data[x] == eol) {
+									break;
+								}
 
-						Transfers.getTransfers().updateCompleted(this, (int) (((double) dataSize / (double) fileSize) * 100));
+								size += (char) data[x];
+							}
+
+							fileSize = Long.parseLong(size);
+
+							Transfers.getTransfers().addTransfer(Transfers.DOWNLOAD, file.getName(), fileSize, this);
+
+							fileOutput.write(data, x + 1, i - x - 1);
+							dataSize += i - x - 1;
+
+							continue;
+						} else {
+							cancel = true;
+							error = true;
+							break;
+						}
 					}
-					Transfers.getTransfers().done(this);
 
-					if (cancel) {
-						downloadFile.delete();
-					}
-				} else if (response.equalsIgnoreCase("error")) {
-					formMain.showErrorDialog("Chyba přenosu: " + user.getName(), input.readLine());
+					fileOutput.write(data, 0, i);
+					dataSize += i;
+
+					Transfers.getTransfers().updateCompleted(this, (int) (((double) dataSize / (double) fileSize) * 100));
 				}
-				input.close();
+				Transfers.getTransfers().done(this);
+
+				if (dataSize < fileSize) {
+					cancel = true;
+				}
+
 				fileOutput.close();
 				inputData.close();
+
+				if (cancel) {
+					downloadFile.delete();
+				}
+
+				if (error) {
+					formMain.showErrorDialog("Chyba přenosu: " + file.getUser().getName(), "Server nevrátil soubor...");
+				}
 			} catch(Exception ex) {
-				formMain.showErrorDialog("Chyba přenosu: " + user.getName(), ex.getMessage());
+				formMain.showErrorDialog("Chyba přenosu: " + file.getUser().getName(), ex.getMessage());
 			}
 		} catch (Exception ex) {
-			formMain.showErrorDialog("Chyba přenosu: " + user.getName(), ex.getMessage());
+			formMain.showErrorDialog("Chyba přenosu: " + file.getUser().getName(), ex.getMessage());
 		}
 	}
 

@@ -22,8 +22,8 @@ public class Directory extends DefaultMutableTreeNode {
 		files = new ArrayList<OneFile>();
 	}
 
-	public void addFile(String name, String path, int size) {
-		OneFile file = new OneFile(name, path, size);
+	public void addFile(String name, String path, long size, User user) {
+		OneFile file = new OneFile(name, path, size, user);
 
 		files.add(file);
 	}

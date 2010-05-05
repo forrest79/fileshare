@@ -9,7 +9,6 @@ import fileshare.settings.Users;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.TreeSelectionModel;
 
 /**

@@ -9,12 +9,14 @@ public class OneFile {
 
 	private String name = "";
 	private String path = "";
-	private int size = 0;
+	private long size = 0;
+	private User user = null;
 
-	public OneFile(String name, String path, int size) {
+	public OneFile(String name, String path, long size, User user) {
 		this.name = name;
 		this.path = path;
 		this.size = size;
+		this.user = user;
 	}
 
 	public String getName() {
@@ -25,8 +27,12 @@ public class OneFile {
 		return path;
 	}
 
-	public int getSize() {
+	public long getSize() {
 		return size;
+	}
+
+	public User getUser() {
+		return user;
 	}
 
 	@Override

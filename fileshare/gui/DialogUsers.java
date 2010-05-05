@@ -62,7 +62,6 @@ public class DialogUsers extends JDialog {
 				user.setName(panelUsers.getTxtName().getText());
 				user.setAddress(panelUsers.getTxtAddress().getText());
 				user.setPort(panelUsers.getTxtPort().getText());
-				System.out.println(panelUsers.getTxtPassword().getText());
 				user.setPassword(panelUsers.getTxtPassword().getText());
 
 				if (edit == -1) {

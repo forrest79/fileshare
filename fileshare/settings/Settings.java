@@ -9,6 +9,8 @@ import java.io.FileWriter;
 import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 /**
  * Třída udržující nastavení, načítání z disku a ukládáná na disk a generující XML se seznamem souborů.
@@ -222,7 +224,7 @@ public class Settings {
 			}
 		};
 
-		String xml = "<dir name=\"" + dir.getName() + "\">";
+		String xml = "<dir name=\"" + dir.getName().replace("&", "&amp;") + "\">";
 
 		File[] files = dir.listFiles(filter);
 		if (files != null) {
@@ -232,7 +234,7 @@ public class Settings {
 				if (one.isDirectory()) {
 					xml += listDir(one);
 				} else {
-					xml += "<file path=\"" + one.getPath() + "\" name=\"" + one.getName() + "\" size=\"" + one.length() + "\" />";
+					xml += "<file path=\"" + one.getPath().replace("&", "&amp;") + "\" name=\"" + one.getName().replace("&", "&amp;") + "\" size=\"" + one.length() + "\" />";
 				}
 			}
 		}
@@ -327,33 +329,21 @@ public class Settings {
 	}
 
 	public static String encrypt(String text) {
-		int[] s = new int[256];
-		for (int i = 0; i < 256; i++) {
-			s[i] = i;
+		BASE64Encoder enc = new BASE64Encoder();
+		try {
+			return enc.encode(text.getBytes("UTF-8"));
+		} catch (Exception e) {
+			return null;
 		}
-		int j = 0;
-		int x;
-		for (int i = 0; i < 256; i++) {
-			j = (j + s[i] + Settings.PASSWORD_KEY.charAt(i % Settings.PASSWORD_KEY.length())) % 256;
-			x = s[i];
-			s[i] = s[j];
-			s[j] = x;
-		}
-		int i = 0;
-		j = 0;
-		StringBuilder sb = new StringBuilder();
-		for (int y = 0; y < text.length(); y++) {
-			i = (i + 1) % 256;
-			j = (j + s[i]) % 256;
-			x = s[i];
-			s[i] = s[j];
-			s[j] = x;
-			sb.append(new String(new int[] { text.charAt(y) ^ s[(s[i] + s[j]) % 256] }, 0, 1));
-		}
-		return sb.toString();
 	}
 
-	public static String decrypt(String crypt) {
-		return encrypt(crypt);
+	public static String decrypt(String text) {
+		BASE64Decoder dec = new BASE64Decoder();
+		try {
+			return new String(dec.decodeBuffer(text), "UTF-8");
+		}
+		catch (IOException e) {
+			return null;
+		}
 	}
 }
