@@ -19,7 +19,7 @@ import java.util.ArrayList;
  */
 public class UsersThread implements Runnable {
 
-	private static final int TIME = 10;
+	private static final int TIME = 60;
 
 	private boolean run = true;
 

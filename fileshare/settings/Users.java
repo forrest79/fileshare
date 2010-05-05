@@ -214,6 +214,15 @@ public class Users {
 		reloadTreeView();
 	}
 
+	public void update(int index) {
+		treeModel.removeNodeFromParent((DefaultMutableTreeNode) rootNode.getChildAt(index));
+
+		DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(get(index).getName());
+		treeModel.insertNodeInto(childNode, rootNode, index);
+
+		reloadTreeView();
+	}
+
 	public String[] getUsersArray() {
 		String[] users = new String[userList.size()];
 

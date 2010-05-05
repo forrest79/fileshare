@@ -68,6 +68,7 @@ public class DialogUsers extends JDialog {
 					users.addUser(user);
 					modelUsers.addElement(user);
 				} else {
+					users.update(edit);
 					modelUsers.remove(edit);
 					modelUsers.add(edit, user);
 				}
