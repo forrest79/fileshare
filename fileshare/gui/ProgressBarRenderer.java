@@ -10,7 +10,7 @@ public class ProgressBarRenderer extends JProgressBar implements TableCellRender
         Integer newProgress = (Integer) progress;
 				setValue(newProgress.intValue());
         
-        setToolTipText("Hotovo " + newProgress.intValue() + "%");
+        setToolTipText("Done " + newProgress.intValue() + "%");
 				
         return this;
     }

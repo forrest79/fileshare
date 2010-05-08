@@ -8,9 +8,9 @@ import java.awt.Frame;
 import javax.swing.*;
 
 /**
- * Dialog pro správu připojených uživatelů.
+ * Dialog for users.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class DialogUsers extends JDialog {
 
@@ -25,7 +25,7 @@ public class DialogUsers extends JDialog {
 
 		setResizable(false);
 
-		setTitle("Uživatelé");
+		setTitle("Users");
 
 		panelUsers = new PanelUsers(this);
 		setSize(panelUsers.getPreferredSize());
@@ -53,9 +53,9 @@ public class DialogUsers extends JDialog {
 			if (users.testUser(panelUsers.getTxtName().getText(), panelUsers.getTxtAddress().getText(), panelUsers.getTxtPort().getText())) {
 
 				User user = null;
-				if (edit == -1) { // Novy uzivatel
+				if (edit == -1) { // New user
 					user = new User();
-				} else { // Editace uzivatele
+				} else { // Edit user
 					user = users.get(edit);
 				}
 
@@ -75,14 +75,14 @@ public class DialogUsers extends JDialog {
 
 				if (!users.saveToFile()) {
 					if (FileShare.DEBUG) {
-						System.err.println("Uživatele se nepodařilo uložit do souboru...");
+						System.err.println("Error while saving user to file...");
 					}
 				}
 
 				blank();
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Chyba při ukládání", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, e.getMessage(), "File save error", JOptionPane.ERROR_MESSAGE);
 
 			return;
 		}
@@ -102,14 +102,14 @@ public class DialogUsers extends JDialog {
 	}
 
 	public void remove() {
-		if ((panelUsers.getListUsers().getSelectedIndex() > -1) && (JOptionPane.showConfirmDialog(this, "Vymazat uživatele '" + modelUsers.elementAt(panelUsers.getListUsers().getSelectedIndex()).toString() + "'?", "Vymazat adresář?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
+		if ((panelUsers.getListUsers().getSelectedIndex() > -1) && (JOptionPane.showConfirmDialog(this, "Remove user '" + modelUsers.elementAt(panelUsers.getListUsers().getSelectedIndex()).toString() + "'?", "Remove user?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 			modelUsers.remove(edit);
 			Users.getUsers().remove(edit);
 			edit = -1;
 
 			if (!Users.getUsers().saveToFile()) {
 				if (FileShare.DEBUG) {
-					System.err.println("Uživatele se nepodařilo vymazat ze souboru...");
+					System.err.println("User remove from file error...");
 				}
 			}
 

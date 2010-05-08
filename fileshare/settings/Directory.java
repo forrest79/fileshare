@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
- * Adresář.
+ * Share directory.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class Directory extends DefaultMutableTreeNode {
 

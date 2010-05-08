@@ -4,9 +4,9 @@ import fileshare.gui.FormMain;
 import fileshare.settings.OneFile;
 
 /**
- * Implementace serveru (Singleton).
+ * Serveru implementation (Singleton).
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class Server {
 

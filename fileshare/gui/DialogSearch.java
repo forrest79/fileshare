@@ -12,9 +12,9 @@ import java.awt.event.MouseListener;
 import javax.swing.*;
 
 /**
- * Dialog pro hledání souborů.
+ * Dialog for file search.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class DialogSearch extends JDialog implements MouseListener {
 
@@ -27,7 +27,7 @@ public class DialogSearch extends JDialog implements MouseListener {
 		setResizable(false);
 		setLocationRelativeTo(null);
 
-		setTitle("Hledat");
+		setTitle("Search");
 
 		setLayout(new BorderLayout());
 
@@ -47,12 +47,12 @@ public class DialogSearch extends JDialog implements MouseListener {
 		add(filesScrollPane, BorderLayout.CENTER);
 
 		JPanel top = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		top.add(new JLabel("Hledat:"));
+		top.add(new JLabel("Search:"));
 
 		final JTextField txtSearch = new JTextField(26);
 		top.add(txtSearch);
 
-		JButton buttonSearch = new JButton("Hledat");
+		JButton buttonSearch = new JButton("Search");
 		buttonSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Users.getUsers().search(txtSearch.getText(), tableModelSearch);
@@ -60,7 +60,7 @@ public class DialogSearch extends JDialog implements MouseListener {
 		});
 		top.add(buttonSearch);
 
-		JButton buttonClose = new JButton("Zavřít");
+		JButton buttonClose = new JButton("Close");
 		buttonClose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);

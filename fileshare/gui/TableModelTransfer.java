@@ -3,13 +3,13 @@ package fileshare.gui;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Model pro tabulku transferů.
+ * Model for table of transfers.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 class TableModelTransfer extends DefaultTableModel {
 
-	private String[] columnNames = {"Přenos", "Soubor", "Velikost", "Hotovo", ""};
+	private String[] columnNames = {"Transfer", "File", "Size", "Done", ""};
 
 	public TableModelTransfer() {
 	}

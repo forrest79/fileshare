@@ -4,9 +4,9 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 
 /**
- * Formulář pro nastavení.
+ * Panel for settings.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class PanelSettings extends javax.swing.JPanel {
 
@@ -42,9 +42,9 @@ public class PanelSettings extends javax.swing.JPanel {
 
     labelPort.setText("Port:");
 
-    labelHeslo.setText("Heslo:");
+    labelHeslo.setText("Password:");
 
-    labelDirs.setText("Adresáře pro sdílení:");
+    labelDirs.setText("Share dirs:");
 
     lstDirs.setModel(new javax.swing.AbstractListModel() {
       String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -53,44 +53,44 @@ public class PanelSettings extends javax.swing.JPanel {
     });
     scrollPaneDirs.setViewportView(lstDirs);
 
-    buttonAddDir.setText("Přidat");
+    buttonAddDir.setText("Add");
     buttonAddDir.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonAddDirActionPerformed(evt);
       }
     });
 
-    buttonRemoveDir.setText("Vymazat");
+    buttonRemoveDir.setText("Remove");
     buttonRemoveDir.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonRemoveDirActionPerformed(evt);
       }
     });
 
-    labelSaveDir.setText("Ukládat soubory do:");
+    labelSaveDir.setText("Download files to:");
 
-    buttonChangeDir.setText("Vybrat adresář");
+    buttonChangeDir.setText("Choose dir");
     buttonChangeDir.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonChangeDirActionPerformed(evt);
       }
     });
 
-    buttonSave.setText("Uložit");
+    buttonSave.setText("Save");
     buttonSave.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonSaveActionPerformed(evt);
       }
     });
 
-    buttonClose.setText("Zavřít");
+    buttonClose.setText("Close");
     buttonClose.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonCloseActionPerformed(evt);
       }
     });
 
-    buttonRegenerateDirs.setText("Přegenerovat seznam souborů");
+    buttonRegenerateDirs.setText("Regenerate files list");
     buttonRegenerateDirs.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonRegenerateDirsActionPerformed(evt);

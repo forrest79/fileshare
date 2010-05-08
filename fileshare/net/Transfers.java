@@ -5,17 +5,17 @@ import java.util.ArrayList;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Seznam transferů souborů (singleton).
+ * List of file transfers (singleton).
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class Transfers {
 
 	public static final int UPLOAD = 0;
 	public static final int DOWNLOAD = 1;
 
-	public static final String CANCEL = "Zrušit";
-	public static final String DONE = "Hotovo";
+	public static final String CANCEL = "Cancel";
+	public static final String DONE = "Done";
 
 	private static Transfers transfersInstance = null;
 

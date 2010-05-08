@@ -111,12 +111,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="labelHeslo">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Heslo:"/>
+        <Property name="text" type="java.lang.String" value="Password:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelDirs">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Adres&#xe1;&#x159;e pro sd&#xed;len&#xed;:"/>
+        <Property name="text" type="java.lang.String" value="Share dirs:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPort">
@@ -145,7 +145,7 @@
     </Container>
     <Component class="javax.swing.JButton" name="buttonAddDir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="P&#x159;idat"/>
+        <Property name="text" type="java.lang.String" value="Add"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAddDirActionPerformed"/>
@@ -153,7 +153,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonRemoveDir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Vymazat"/>
+        <Property name="text" type="java.lang.String" value="Remove"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRemoveDirActionPerformed"/>
@@ -161,14 +161,14 @@
     </Component>
     <Component class="javax.swing.JLabel" name="labelSaveDir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ukl&#xe1;dat soubory do:"/>
+        <Property name="text" type="java.lang.String" value="Download files to:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtSaveDir">
     </Component>
     <Component class="javax.swing.JButton" name="buttonChangeDir">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Vybrat adres&#xe1;&#x159;"/>
+        <Property name="text" type="java.lang.String" value="Choose directory"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonChangeDirActionPerformed"/>
@@ -176,7 +176,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonSave">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ulo&#x17e;it"/>
+        <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSaveActionPerformed"/>
@@ -184,7 +184,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonClose">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Zav&#x159;&#xed;t"/>
+        <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCloseActionPerformed"/>
@@ -192,7 +192,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonRegenerateDirs">
       <Properties>
-        <Property name="text" type="java.lang.String" value="P&#x159;egenerovat seznam soubor&#x16f;"/>
+        <Property name="text" type="java.lang.String" value="Regenerate files list"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRegenerateDirsActionPerformed"/>

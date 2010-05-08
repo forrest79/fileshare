@@ -20,7 +20,7 @@ import javax.swing.event.TreeSelectionListener;
 /**
  * Main window controller.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 class ControllerMain implements ActionListener, TreeSelectionListener, MouseListener, PropertyChangeListener {
 
@@ -39,10 +39,10 @@ class ControllerMain implements ActionListener, TreeSelectionListener, MouseList
 				formMain.connect();
 			} catch (Exception ex) {
 				if (FileShare.DEBUG) {
-					System.out.println("Chyba při připojení: " + ex.getMessage());
+					System.out.println("Connection error: " + ex.getMessage());
 				}
 
-				formMain.showErrorDialog("Připojení...", "Nastala chyba při připojení!");
+				formMain.showErrorDialog("Connect...", "Error while connecting!");
 			}
 		} else if (e.getActionCommand().equalsIgnoreCase(FormMain.COMMAND_DISCONNECT)) {
 			try {
@@ -50,10 +50,10 @@ class ControllerMain implements ActionListener, TreeSelectionListener, MouseList
 				formMain.disconnect();
 			} catch (Exception ex) {
 				if (FileShare.DEBUG) {
-					System.out.println("Chyba při odpojení: " + ex.getMessage());
+					System.out.println("Disconnection error: " + ex.getMessage());
 				}
 
-				formMain.showErrorDialog("Odpojení...", "Nastala chyba při odpojení!");
+				formMain.showErrorDialog("Disconnect...", "Error while disconnection!");
 			}
 		} else if (e.getActionCommand().equalsIgnoreCase(FormMain.COMMAND_SEARCH)) {
 			formMain.showDialogSearch();

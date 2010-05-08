@@ -12,9 +12,9 @@ import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
 
 /**
- * Uživatelské rozhraní.
+ * GUI.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class FormMain extends JFrame {
 	
@@ -63,15 +63,15 @@ public class FormMain extends JFrame {
 		// MENU
 		JMenuBar menuBar = new JMenuBar();
 
-		JMenu menuFile = new JMenu("Soubor");
+		JMenu menuFile = new JMenu("File");
 		menuFile.setMnemonic(KeyEvent.VK_S);
 
-		menuFileConnect = new JMenuItem("Připojit", KeyEvent.VK_P);
+		menuFileConnect = new JMenuItem("Connect", KeyEvent.VK_C);
 		menuFileConnect.setActionCommand(COMMAND_CONNECT);
 		menuFileConnect.addActionListener(controllerMain);
 		menuFile.add(menuFileConnect);
 
-		menuFileDisconnect = new JMenuItem("Odpojit", KeyEvent.VK_O);
+		menuFileDisconnect = new JMenuItem("Disconnect", KeyEvent.VK_D);
 		menuFileDisconnect.setActionCommand(COMMAND_DISCONNECT);
 		menuFileDisconnect.addActionListener(controllerMain);
 		menuFileDisconnect.setVisible(false);
@@ -79,33 +79,33 @@ public class FormMain extends JFrame {
 
 		menuFile.addSeparator();
 
-		JMenuItem menuFileSearch = new JMenuItem("Hledat...", KeyEvent.VK_N);
+		JMenuItem menuFileSearch = new JMenuItem("Search...", KeyEvent.VK_S);
 		menuFileSearch.setActionCommand(COMMAND_SEARCH);
 		menuFileSearch.addActionListener(controllerMain);
 		menuFile.add(menuFileSearch);
 		
-		JMenuItem menuFileUsers = new JMenuItem("Uživatelé...", KeyEvent.VK_C);
+		JMenuItem menuFileUsers = new JMenuItem("Users...", KeyEvent.VK_U);
 		menuFileUsers.setActionCommand(COMMAND_USERS);
 		menuFileUsers.addActionListener(controllerMain);
 		menuFile.add(menuFileUsers);
 
 		menuFile.addSeparator();
 
-		JMenuItem menuFileSettings = new JMenuItem("Nastavení...", KeyEvent.VK_N);
+		JMenuItem menuFileSettings = new JMenuItem("Settings...", KeyEvent.VK_E);
 		menuFileSettings.setActionCommand(COMMAND_SETTINGS);
 		menuFileSettings.addActionListener(controllerMain);
 		menuFile.add(menuFileSettings);
 
 		menuFile.addSeparator();
 
-		JMenuItem menuFileEnd = new JMenuItem("Konec", KeyEvent.VK_K);
+		JMenuItem menuFileEnd = new JMenuItem("End", KeyEvent.VK_E);
 		menuFileEnd.setActionCommand(COMMAND_END);
 		menuFileEnd.addActionListener(controllerMain);
 		menuFile.add(menuFileEnd);
 
-		JMenu menuHelp = new JMenu("Nápověda");
+		JMenu menuHelp = new JMenu("Help");
 		menuHelp.setMnemonic(KeyEvent.VK_N);
-		JMenuItem menuHelpAbout = new JMenuItem("O aplikaci...", KeyEvent.VK_O);
+		JMenuItem menuHelpAbout = new JMenuItem("About...", KeyEvent.VK_O);
 		menuHelpAbout.setActionCommand(COMMAND_ABOUT);
 		menuHelpAbout.addActionListener(controllerMain);
 		menuHelp.add(menuHelpAbout);
@@ -120,16 +120,16 @@ public class FormMain extends JFrame {
 
 		toolBarConnect = new JButton();
 		toolBarConnect.setActionCommand(COMMAND_CONNECT);
-		toolBarConnect.setToolTipText("Připojit");
+		toolBarConnect.setToolTipText("Connect");
 		toolBarConnect.addActionListener(controllerMain);
-		toolBarConnect.setIcon(new ImageIcon(getClass().getResource("icon/icon-connect.png"), "Připojit"));
+		toolBarConnect.setIcon(new ImageIcon(getClass().getResource("icon/icon-connect.png"), "Connect"));
 		toolBar.add(toolBarConnect);
 
 		toolBarDisconnect = new JButton();
 		toolBarDisconnect.setActionCommand(COMMAND_DISCONNECT);
-		toolBarDisconnect.setToolTipText("Odpojit");
+		toolBarDisconnect.setToolTipText("Disconnect");
 		toolBarDisconnect.addActionListener(controllerMain);
-		toolBarDisconnect.setIcon(new ImageIcon(getClass().getResource("icon/icon-disconnect.png"), "Odpojit"));
+		toolBarDisconnect.setIcon(new ImageIcon(getClass().getResource("icon/icon-disconnect.png"), "Disconnect"));
 		toolBarDisconnect.setVisible(false);
 		toolBar.add(toolBarDisconnect);
 
@@ -137,32 +137,32 @@ public class FormMain extends JFrame {
 
 		JButton toolBarSearch = new JButton();
 		toolBarSearch.setActionCommand(COMMAND_SEARCH);
-		toolBarSearch.setToolTipText("Hledat...");
+		toolBarSearch.setToolTipText("Search...");
 		toolBarSearch.addActionListener(controllerMain);
-		toolBarSearch.setIcon(new ImageIcon(getClass().getResource("icon/icon-search.png"), "Hledat..."));
+		toolBarSearch.setIcon(new ImageIcon(getClass().getResource("icon/icon-search.png"), "Search..."));
 		toolBar.add(toolBarSearch);
 
 		JButton toolBarUsers = new JButton();
 		toolBarUsers.setActionCommand(COMMAND_USERS);
-		toolBarUsers.setToolTipText("Uživatelé...");
+		toolBarUsers.setToolTipText("Users...");
 		toolBarUsers.addActionListener(controllerMain);
-		toolBarUsers.setIcon(new ImageIcon(getClass().getResource("icon/icon-users.png"), "Uživatelé..."));
+		toolBarUsers.setIcon(new ImageIcon(getClass().getResource("icon/icon-users.png"), "Users..."));
 		toolBar.add(toolBarUsers);
 
 		toolBar.addSeparator();
 
 		JButton toolBarSettings = new JButton();
 		toolBarSettings.setActionCommand(COMMAND_SETTINGS);
-		toolBarSettings.setToolTipText("Nastavení...");
+		toolBarSettings.setToolTipText("Settings...");
 		toolBarSettings.addActionListener(controllerMain);
-		toolBarSettings.setIcon(new ImageIcon(getClass().getResource("icon/icon-settings.png"), "Nastavení..."));
+		toolBarSettings.setIcon(new ImageIcon(getClass().getResource("icon/icon-settings.png"), "Settings..."));
 		toolBar.add(toolBarSettings);
 
 		JButton toolBarAbout = new JButton();
 		toolBarAbout.setActionCommand(COMMAND_ABOUT);
-		toolBarAbout.setToolTipText("O aplikaci...");
+		toolBarAbout.setToolTipText("About...");
 		toolBarAbout.addActionListener(controllerMain);
-		toolBarAbout.setIcon(new ImageIcon(getClass().getResource("icon/icon-about.png"), "O aplikaci..."));
+		toolBarAbout.setIcon(new ImageIcon(getClass().getResource("icon/icon-about.png"), "About..."));
 		toolBar.add(toolBarAbout);
 
 		// COMPUTERS TREE

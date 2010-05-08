@@ -8,7 +8,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 /**
- * Renderer pro uživatele.
+ * Renderer for users.
  *
  * @author Jakub Trmota
  */
@@ -33,13 +33,13 @@ public class TreeRendererUsers extends DefaultTreeCellRenderer {
 
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
 
-		if (node.getLevel() == 1) { // Uživatel
+		if (node.getLevel() == 1) { // User
 			if (Users.getUsers().get(node).isOffline()) {
 				setIcon(iconOffline);
 			} else if(Users.getUsers().get(node).isOnline()) {
 				setIcon(iconOnline);
 			}
-		} else if (node.getLevel() > 1) { // Složka
+		} else if (node.getLevel() > 1) { // Directory
 			setIcon(iconFolder);
 		}
 		return this;

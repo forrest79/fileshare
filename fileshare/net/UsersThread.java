@@ -13,9 +13,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
- * Kontroluje status klientů a získává seznam souborů.
+ * Check users status and gets file list.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class UsersThread implements Runnable {
 
@@ -47,7 +47,7 @@ public class UsersThread implements Runnable {
 
 						String response = input.readLine();
 						if (!response.equalsIgnoreCase("ok")) {
-							formMain.showErrorDialog("Chyba připojení: " + user.getName(), user.getName() + ": " + input.readLine());
+							formMain.showErrorDialog("Connection error: " + user.getName(), user.getName() + ": " + input.readLine());
 							user.setOfflineStatus();
 							Users.getUsers().reloadTreeView(i);
 						}
@@ -68,7 +68,7 @@ public class UsersThread implements Runnable {
 							Users.getUsers().parseShareDirsXml(i, xml);
 							Users.getUsers().reloadTreeView(i);
 						} else if (response.equalsIgnoreCase("error")) {
-							formMain.showErrorDialog("Chyba připojení: " + user.getName(), user.getName() + ": " + input.readLine());
+							formMain.showErrorDialog("Connection error: " + user.getName(), user.getName() + ": " + input.readLine());
 							user.setOfflineStatus();
 						}
 					}

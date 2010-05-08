@@ -3,13 +3,13 @@ package fileshare.gui;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * Model pro tabulku hledání.
+ * Model for table serach.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 class TableModelSearch extends DefaultTableModel {
 
-	private String[] columnNames = {"Uživatel", "Soubor", "Velikost"};
+	private String[] columnNames = {"User", "File", "Size"};
 
 	public TableModelSearch() {
 		super(0, 3);

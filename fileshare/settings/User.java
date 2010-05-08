@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * User - one user.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class User {
 
@@ -70,11 +70,11 @@ public class User {
 		try {
 			intPort = Integer.parseInt(port);
 		} catch (Exception e) {
-			throw new Exception("Port musí být celé číslo!");
+			throw new Exception("Port needs to be integer!");
 		}
 
 		if ((intPort < 1) || (intPort > 10000)) {
-			throw new Exception("Číslo portu musí být větší než 0 a menší než 10000!");
+			throw new Exception("Port number between 0 and 10000!");
 		}
 
 		setPort(intPort);

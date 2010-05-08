@@ -9,9 +9,9 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 /**
- * Implementace serverové části.
+ * Server implemantation.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class ServerThread implements Runnable {
 

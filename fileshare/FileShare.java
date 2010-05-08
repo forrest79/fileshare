@@ -5,9 +5,9 @@ import fileshare.settings.Settings;
 import fileshare.settings.Users;
 
 /**
- * Hlavní třída.
+ * Main class.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class FileShare {
 
@@ -17,8 +17,8 @@ public class FileShare {
 	public static String SLASH = "/";
 
 	public static final String NAME = "FileShare";
-	public static final double VERSION = 0.99;
-	public static final String EMAIL = "trmotjak@fel.cvut.cz";
+	public static final double VERSION = 1.00;
+	public static final String EMAIL = "info@forrest79.net";
 
 	private static String appPath = "";
 
@@ -30,13 +30,13 @@ public class FileShare {
 
 		if (!Settings.getSettings().loadFromFile()) {
 			if (DEBUG) {
-				System.err.println("Nastavení ze souboru se nepodařilo načíst...");
+				System.err.println("Load settings error...");
 			}
 		}
 
 		if (!Users.getUsers().loadFromFile()) {
 			if (DEBUG) {
-				System.err.println("Uživatele ze souboru se nepodařilo načíst...");
+				System.err.println("Load users error...");
 			}
 		}
 

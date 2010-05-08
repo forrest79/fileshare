@@ -12,9 +12,9 @@ import java.io.InputStreamReader;
 import java.net.Socket;
 
 /**
- * Odpověď serveru.
+ * Server response.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class ServerResponse implements Runnable, ITransfer {
 	private Socket socket;
@@ -104,17 +104,17 @@ public class ServerResponse implements Runnable, ITransfer {
 					output.write("ERROR\nOnly CONNECT, ISALIVE and GET [file] command is allowed.".getBytes());
 				}
 			} else {
-				output.write("ERROR\nŠpatné heslo.".getBytes());
+				output.write("ERROR\nBad password.".getBytes());
 			}
 		} catch (Exception ex) {
-			System.err.println("SR1: " + ex);
+			System.err.println(ex);
 			Transfers.getTransfers().done(this);
 		} finally {
 			if (output != null) {
 				try {
 					output.close();
 				} catch (Exception ex) {
-					System.err.println("SR2: " + ex);
+					System.err.println(ex);
 				}
 			}
 			try {
@@ -125,7 +125,7 @@ public class ServerResponse implements Runnable, ITransfer {
 					socket.close();
 				}
 			} catch (IOException ex) {
-				System.err.println("SR3: " + ex);
+				System.err.println(ex);
 			}
 		}
 

@@ -1,9 +1,9 @@
 package fileshare.settings;
 
 /**
- * Soubor.
+ * File from directory.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class OneFile {
 

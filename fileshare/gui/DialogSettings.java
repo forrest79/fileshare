@@ -9,9 +9,9 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
- * Panel pro formulář nastavení.
+ * Dialog for settings.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class DialogSettings extends JDialog {
 	
@@ -28,7 +28,7 @@ public class DialogSettings extends JDialog {
 
 		setResizable(false);
 
-		setTitle("Nastavení");
+		setTitle("Settings");
 
 		panelSettings = new PanelSettings(this);
 		setSize(panelSettings.getPreferredSize());
@@ -40,7 +40,7 @@ public class DialogSettings extends JDialog {
 		add(panelSettings);
 
 		dirChooser = new JFileChooser();
-		dirChooser.setDialogTitle("Vyberte adresář");
+		dirChooser.setDialogTitle("Choose directory");
 		dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	}
 
@@ -74,7 +74,7 @@ public class DialogSettings extends JDialog {
 			if (regenerateShareDirs) {
 				if (!settings.generateShareDirsXml()) {
 					if (FileShare.DEBUG) {
-						System.err.println("Nepodařilo se vygenerovat XML se seznamem sdílených souborů...");
+						System.err.println("XML file list for share directories error...");
 					}
 				}
 
@@ -83,11 +83,11 @@ public class DialogSettings extends JDialog {
 
 			if (!settings.saveToFile()) {
 				if (FileShare.DEBUG) {
-					System.err.println("Nastavení se nepodařilo uložit do souboru...");
+					System.err.println("Error saving settings to file...");
 				}
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage(), "Chyba při ukládání", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, e.getMessage(), "Save error", JOptionPane.ERROR_MESSAGE);
 
 			return;
 		}
@@ -105,7 +105,7 @@ public class DialogSettings extends JDialog {
 	}
 
 	public void removeShareDir() {
-		if ((panelSettings.getListDirs().getSelectedIndex() > -1) && (JOptionPane.showConfirmDialog(this, "Vymazat adresář '" + modelShareDirs.elementAt(panelSettings.getListDirs().getSelectedIndex()).toString() + "'?", "Vymazat adresář?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
+		if ((panelSettings.getListDirs().getSelectedIndex() > -1) && (JOptionPane.showConfirmDialog(this, "Remove directory '" + modelShareDirs.elementAt(panelSettings.getListDirs().getSelectedIndex()).toString() + "'?", "Remove directory?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 			modelShareDirs.remove(panelSettings.getListDirs().getSelectedIndex());
 			regenerateShareDirs = true;
 		}
@@ -120,10 +120,10 @@ public class DialogSettings extends JDialog {
 	}
 
 	public void generateShareList() {
-		if (JOptionPane.showConfirmDialog(this, "Opravdu si přejete přegenerovat seznam souborů?\nTo může chvilku trvat...", "Přegenerovat seznam souborů?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+		if (JOptionPane.showConfirmDialog(this, "Do you really want to regenerate XML file list?\nIt can take a minute...", "Regenerate file list?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			if (!Settings.getSettings().generateShareDirsXml()) {
 				if (FileShare.DEBUG) {
-					System.err.println("Nepodařilo se vygenerovat XML se seznamem sdílených souborů...");
+					System.err.println("XML file list generate error...");
 				}
 			}
 		}

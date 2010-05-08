@@ -15,10 +15,10 @@ public class IconRenderer extends JLabel implements TableCellRenderer {
 
 				if (newString.equalsIgnoreCase("download")) {
 					icon = "icon-download";
-					toolTip = "Stahuji...";
+					toolTip = "Downloading...";
 				} else {
 					icon = "icon-upload";
-					toolTip = "Nahrávám...";
+					toolTip = "Uploading...";
 				}
 
 				setIcon(new ImageIcon(getClass().getResource("icon/" + icon + ".png"), toolTip));

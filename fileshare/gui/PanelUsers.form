@@ -97,14 +97,14 @@
   <SubComponents>
     <Component class="javax.swing.JLabel" name="labelName">
       <Properties>
-        <Property name="text" type="java.lang.String" value="N&#xe1;zev:"/>
+        <Property name="text" type="java.lang.String" value="Name:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtName">
     </Component>
     <Component class="javax.swing.JLabel" name="labelAddress">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Adresa:"/>
+        <Property name="text" type="java.lang.String" value="Address:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="labelPort">
@@ -114,14 +114,14 @@
     </Component>
     <Component class="javax.swing.JLabel" name="labelPassword">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Heslo:"/>
+        <Property name="text" type="java.lang.String" value="Password:"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPort">
     </Component>
     <Component class="javax.swing.JToggleButton" name="buttonClose">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Zav&#x159;&#xed;t"/>
+        <Property name="text" type="java.lang.String" value="Close"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCloseActionPerformed"/>
@@ -129,7 +129,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonNew">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Nov&#xfd;"/>
+        <Property name="text" type="java.lang.String" value="New"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonNewActionPerformed"/>
@@ -137,7 +137,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonSave">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Ulo&#x17e;it"/>
+        <Property name="text" type="java.lang.String" value="Save"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSaveActionPerformed"/>
@@ -145,7 +145,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="buttonRemove">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Vymazat"/>
+        <Property name="text" type="java.lang.String" value="Remove"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonRemoveActionPerformed"/>

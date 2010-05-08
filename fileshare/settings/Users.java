@@ -24,7 +24,7 @@ import org.xml.sax.InputSource;
 /**
  * Users (singleton).
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class Users {
 
@@ -45,7 +45,7 @@ public class Users {
 
 		userList = new ArrayList<User>();
 
-		rootNode = new DefaultMutableTreeNode("Uživatelé");
+		rootNode = new DefaultMutableTreeNode("Users");
 		treeModel = new DefaultTreeModel(rootNode);
 
 		searchList = new ArrayList<OneFile>();
@@ -74,7 +74,7 @@ public class Users {
 				while ((line = input.readLine()) != null) {
 					line = line.trim();
 
-					if (line.startsWith("#")) { // Komentar
+					if (line.startsWith("#")) { // Comment
 						continue;
 					}
 
@@ -167,11 +167,11 @@ public class Users {
 
 	public boolean testUser(String name, String address, String port) throws Exception {
 		if (name.isEmpty()) {
-			throw new Exception("Musíte zadat název!");
+			throw new Exception("Name is required!");
 		}
 
 		if (address.isEmpty()) {
-			throw new Exception("Musíte zadat adresu!");
+			throw new Exception("Address is required!");
 		}
 
 		int intPort = 0;
@@ -179,11 +179,11 @@ public class Users {
 		try {
 			intPort = Integer.parseInt(port);
 		} catch (Exception e) {
-			throw new Exception("Port musí být celé číslo!");
+			throw new Exception("Port needs to be integer!");
 		}
 
 		if ((intPort < 1) || (intPort > 10000)) {
-			throw new Exception("Číslo portu musí být větší než 0 a menší než 10000!");
+			throw new Exception("Port number between 0 and 10000!");
 		}
 
 		return true;

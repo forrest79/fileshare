@@ -13,9 +13,9 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
 
 /**
- * Třída udržující nastavení, načítání z disku a ukládáná na disk a generující XML se seznamem souborů.
+ * Settings, save to file, load from file.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class Settings {
 

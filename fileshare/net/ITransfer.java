@@ -1,9 +1,9 @@
 package fileshare.net;
 
 /**
- * Rozhraní pro upload a download souborů.
+ * Interface for upload and download files.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public interface ITransfer {
 

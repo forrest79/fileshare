@@ -3,9 +3,9 @@ package fileshare.gui;
 import fileshare.FileShare;
 
 /**
- * Formulář pro dialog O aplikaci.
+ * Panel About.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class PanelAbout extends javax.swing.JPanel {
 
@@ -36,7 +36,7 @@ public class PanelAbout extends javax.swing.JPanel {
 
     iconMain.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fileshare/gui/icon/icon-main.png"))); // NOI18N
 
-    buttonClose.setText("Zavřít");
+    buttonClose.setText("Close");
     buttonClose.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonCloseActionPerformed(evt);

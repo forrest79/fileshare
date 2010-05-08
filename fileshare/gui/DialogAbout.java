@@ -7,9 +7,9 @@ import java.net.URI;
 import javax.swing.JDialog;
 
 /**
- * Dialog o aplikaci.
+ * Dialog about.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class DialogAbout extends JDialog {
 	public DialogAbout(Frame owner, boolean modal) {
@@ -17,7 +17,7 @@ public class DialogAbout extends JDialog {
 
 		setResizable(false);
 
-		setTitle("O aplikaci");
+		setTitle("About");
 
 		PanelAbout panelAbout = new PanelAbout(this);
 		setSize(panelAbout.getPreferredSize());

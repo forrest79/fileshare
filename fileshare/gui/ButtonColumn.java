@@ -14,9 +14,9 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 
 /**
- * Tlačítko v tabulce.
+ * Button in table row.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener {
 	JTable table;
@@ -71,7 +71,7 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 		fireEditingStopped();
 
 		if (e.getActionCommand().equals(Transfers.CANCEL)) {
-			if (JOptionPane.showConfirmDialog((Component) e.getSource(), "Opravdu chcete zrušit upload souboru?", "Zrušit upload?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+			if (JOptionPane.showConfirmDialog((Component) e.getSource(), "Do you really want to cancel?", "Cancel?", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
 				Transfers.getTransfers().cancel(table.getSelectedRow());
 			}
 		} else if (e.getActionCommand().equals(Transfers.DONE)) {

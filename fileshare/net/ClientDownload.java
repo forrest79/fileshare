@@ -13,9 +13,9 @@ import java.io.OutputStreamWriter;
 import java.net.Socket;
 
 /**
- * Stáhne ze serveru.
+ * Download file from server.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class ClientDownload implements Runnable, ITransfer {
 
@@ -102,13 +102,13 @@ public class ClientDownload implements Runnable, ITransfer {
 				}
 
 				if (error) {
-					formMain.showErrorDialog("Chyba přenosu: " + file.getUser().getName(), "Server nevrátil soubor...");
+					formMain.showErrorDialog("Transport error: " + file.getUser().getName(), "No file was send...");
 				}
 			} catch(Exception ex) {
-				formMain.showErrorDialog("Chyba přenosu: " + file.getUser().getName(), ex.getMessage());
+				formMain.showErrorDialog("Transport error: " + file.getUser().getName(), ex.getMessage());
 			}
 		} catch (Exception ex) {
-			formMain.showErrorDialog("Chyba přenosu: " + file.getUser().getName(), ex.getMessage());
+			formMain.showErrorDialog("Transport error: " + file.getUser().getName(), ex.getMessage());
 		}
 	}
 

@@ -4,9 +4,9 @@ import javax.swing.JList;
 import javax.swing.JTextField;
 
 /**
- * Formulář pro seznam uživatelů.
+ * Form for users.
  *
- * @author Jakub Trmota
+ * @author Jakub Trmota (Forrest79)
  */
 public class PanelUsers extends javax.swing.JPanel {
 
@@ -37,36 +37,36 @@ public class PanelUsers extends javax.swing.JPanel {
     txtAddress = new javax.swing.JTextField();
     txtPassword = new javax.swing.JTextField();
 
-    labelName.setText("Název:");
+    labelName.setText("Name:");
 
-    labelAddress.setText("Adresa:");
+    labelAddress.setText("Address:");
 
     labelPort.setText("Port:");
 
-    labelPassword.setText("Heslo:");
+    labelPassword.setText("Password:");
 
-    buttonClose.setText("Zavřít");
+    buttonClose.setText("Close");
     buttonClose.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonCloseActionPerformed(evt);
       }
     });
 
-    buttonNew.setText("Nový");
+    buttonNew.setText("New");
     buttonNew.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonNewActionPerformed(evt);
       }
     });
 
-    buttonSave.setText("Uložit");
+    buttonSave.setText("Save");
     buttonSave.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonSaveActionPerformed(evt);
       }
     });
 
-    buttonRemove.setText("Vymazat");
+    buttonRemove.setText("Remove");
     buttonRemove.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         buttonRemoveActionPerformed(evt);
