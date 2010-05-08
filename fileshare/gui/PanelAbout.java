@@ -43,18 +43,18 @@ public class PanelAbout extends javax.swing.JPanel {
       }
     });
 
-    labelName.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
+    labelName.setFont(new java.awt.Font("Tahoma", 1, 48));
     labelName.setForeground(new java.awt.Color(82, 24, 24));
     labelName.setText("FileShare");
 
-    labelVersion.setFont(new java.awt.Font("Tahoma", 3, 18)); // NOI18N
+    labelVersion.setFont(new java.awt.Font("Tahoma", 3, 18));
     labelVersion.setForeground(new java.awt.Color(82, 24, 24));
     labelVersion.setText("1.0");
 
     labelProgrammer.setText("Jakub Trmota |");
 
     labelEmail.setForeground(new java.awt.Color(0, 0, 255));
-    labelEmail.setText("trmotjak@fel.cvut.cz");
+    labelEmail.setText("info@forrest79.net");
     labelEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
     labelEmail.addMouseListener(new java.awt.event.MouseAdapter() {
       public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -76,7 +76,7 @@ public class PanelAbout extends javax.swing.JPanel {
             .addComponent(labelProgrammer)
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
             .addComponent(labelEmail)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 69, Short.MAX_VALUE)
             .addComponent(buttonClose))
           .addGroup(layout.createSequentialGroup()
             .addGap(41, 41, 41)

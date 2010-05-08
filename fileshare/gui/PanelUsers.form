@@ -34,15 +34,11 @@
                           <Component id="txtPassword" alignment="0" pref="153" max="32767" attributes="0"/>
                       </Group>
                   </Group>
+                  <Component id="buttonClose" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="buttonClose" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="buttonNew" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="buttonSave" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
+                      <Component id="buttonNew" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="buttonSave" pref="77" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="buttonRemove" min="-2" max="-2" attributes="0"/>
                   </Group>
@@ -82,8 +78,8 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="buttonNew" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="buttonSave" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="buttonRemove" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="buttonSave" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="128" max="32767" attributes="0"/>
                       <Component id="buttonClose" min="-2" max="-2" attributes="0"/>
