@@ -7,7 +7,6 @@ FileShare is distributed under GPL license.
 
 INTRODUCTION
 ============
-
 File sharing written in Java as school project.
 
 
