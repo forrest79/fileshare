@@ -6,7 +6,9 @@ import fileshare.net.Transfers;
 import fileshare.settings.OneFile;
 import fileshare.settings.Settings;
 import fileshare.settings.Users;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.HeadlessException;
 import java.awt.event.KeyEvent;
 import javax.swing.*;
 import javax.swing.tree.TreeSelectionModel;
@@ -14,53 +16,127 @@ import javax.swing.tree.TreeSelectionModel;
 /**
  * GUI.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class FormMain extends JFrame {
-	
-	private JFrame formMain = null;
-
-	private ControllerMain controllerMain = null;
-
-	private DialogSearch dialogSearch = null;
-	private DialogUsers dialogUsers = null;
-	private DialogSettings dialogSettings = null;
-	private DialogAbout dialogAbout = null;
-
-	private JMenuItem menuFileConnect = null;
-	private JMenuItem menuFileDisconnect = null;
-	private JButton toolBarConnect = null;
-	private JButton toolBarDisconnect = null;
-
-	private TableModelFiles tableModelFiles = null;
-	private TableModelTransfer tableModelTransfer = null;
-
+	/**
+	 * Connect command.
+	 */
 	public static final String COMMAND_CONNECT = "connect";
+
+	/**
+	 * Disconnect command.
+	 */
 	public static final String COMMAND_DISCONNECT = "disconnect";
+
+	/**
+	 * Search command.
+	 */
 	public static final String COMMAND_SEARCH = "search";
+
+	/**
+	 * Users command.
+	 */
 	public static final String COMMAND_USERS = "users";
+
+	/**
+	 * Settings command.
+	 */
 	public static final String COMMAND_SETTINGS = "settings";
+
+	/**
+	 * End command.
+	 */
 	public static final String COMMAND_END = "end";
+
+	/**
+	 * About command.
+	 */
 	public static final String COMMAND_ABOUT = "about";
 
+	/**
+	 * Main form frame.
+	 */
+	private JFrame formMain = null;
+
+	/**
+	 * Main controller.
+	 */
+	private ControllerMain controllerMain = null;
+
+	/**
+	 * Search dialog.
+	 */
+	private DialogSearch dialogSearch = null;
+
+	/**
+	 * Users dialog.
+	 */
+	private DialogUsers dialogUsers = null;
+
+	/**
+	 * Settings dialog.
+	 */
+	private DialogSettings dialogSettings = null;
+
+	/**
+	 * About dialog.
+	 */
+	private DialogAbout dialogAbout = null;
+
+	/**
+	 * Connect menu item.
+	 */
+	private JMenuItem menuFileConnect = null;
+
+	/**
+	 * Disconnect menu item.
+	 */
+	private JMenuItem menuFileDisconnect = null;
+
+	/**
+	 * Connect toolbar button.
+	 */
+	private JButton toolBarConnect = null;
+
+	/**
+	 * Disconnect toolbar button.
+	 */
+	private JButton toolBarDisconnect = null;
+
+	/**
+	 * Table with files.
+	 */
+	private TableModelFiles tableModelFiles = null;
+
+	/**
+	 * Table with transfers.
+	 */
+	private TableModelTransfer tableModelTransfer = null;
+
+	/**
+	 * Initailiza main form.
+	 *
+	 * @throws HeadlessException
+	 */
 	public FormMain() throws HeadlessException {
-		// MODELS
+		// Models
 		tableModelFiles = new TableModelFiles();
 		tableModelTransfer = new TableModelTransfer();
 
-		// DIALOGS
+		// Dialogs
 		dialogSearch = new DialogSearch(this, true);
 		dialogUsers = new DialogUsers(this, true);
 		dialogSettings = new DialogSettings(this, true);
 		dialogAbout = new DialogAbout(this, true);
 
-		// CONTROLLER
+		// Controller
 		controllerMain = new ControllerMain(this);
 
-		// LAYOUT
+		// Layout
 		getContentPane().setLayout(new BorderLayout());
 
-		// MENU
+		// Menu
 		JMenuBar menuBar = new JMenuBar();
 
 		JMenu menuFile = new JMenu("File");
@@ -83,7 +159,7 @@ public class FormMain extends JFrame {
 		menuFileSearch.setActionCommand(COMMAND_SEARCH);
 		menuFileSearch.addActionListener(controllerMain);
 		menuFile.add(menuFileSearch);
-		
+
 		JMenuItem menuFileUsers = new JMenuItem("Users...", KeyEvent.VK_U);
 		menuFileUsers.setActionCommand(COMMAND_USERS);
 		menuFileUsers.addActionListener(controllerMain);
@@ -114,7 +190,7 @@ public class FormMain extends JFrame {
 		menuBar.add(Box.createHorizontalGlue());
 		menuBar.add(menuHelp);
 
-		// TOOLBAR
+		// Toolbar
 		JToolBar toolBar = new JToolBar();
 		toolBar.setFloatable(false);
 
@@ -165,7 +241,7 @@ public class FormMain extends JFrame {
 		toolBarAbout.setIcon(new ImageIcon(getClass().getResource("icon/icon-about.png"), "About..."));
 		toolBar.add(toolBarAbout);
 
-		// COMPUTERS TREE
+		// Computers tree
 		JTree treeUsers = new JTree();
 		treeUsers.setModel(Users.getUsers().getTreeModel());
 		treeUsers.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
@@ -176,7 +252,7 @@ public class FormMain extends JFrame {
 		JScrollPane computersScrollPane = new JScrollPane(treeUsers);
 		computersScrollPane.setMinimumSize(new Dimension(200, 200));
 
-		// FILES TABLE
+		// Files table
 		JTable filesTable = new JTable(tableModelFiles);
 		filesTable.setPreferredScrollableViewportSize(new Dimension(400, 200));
 		filesTable.setFillsViewportHeight(true);
@@ -189,7 +265,7 @@ public class FormMain extends JFrame {
 		JScrollPane filesScrollPane = new JScrollPane(filesTable);
 		filesScrollPane.setMinimumSize(new Dimension(300, 200));
 
-		// TRANSFER TABLE
+		// Transfer table
 		JTable transferTable = new JTable(tableModelTransfer);
 		transferTable.setPreferredScrollableViewportSize(new Dimension(800, 200));
 		transferTable.setFillsViewportHeight(true);
@@ -207,7 +283,7 @@ public class FormMain extends JFrame {
 		JScrollPane transferScrollPane = new JScrollPane(transferTable);
 		transferScrollPane.setMinimumSize(new Dimension(800, 150));
 
-		// SPLIT PANES
+		// Split panes
 		JSplitPane splitPaneHorizontal = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, computersScrollPane, filesScrollPane);
 		splitPaneHorizontal.setOneTouchExpandable(false);
 		splitPaneHorizontal.setDividerLocation(250);
@@ -229,10 +305,15 @@ public class FormMain extends JFrame {
 		getContentPane().add(panelTop, BorderLayout.PAGE_START);
 		getContentPane().add(splitPaneVertical, BorderLayout.CENTER);
 
-		// TRANSFERS
+		// Transfers
 		Transfers.getTransfers().setTableModel(tableModelTransfer);
 	}
 
+	/**
+	 * Clear files table and add files.
+	 *
+	 * @param files
+	 */
 	public void showFiles(OneFile[] files) {
 		tableModelFiles.setNumRows(0);
 		for (int i = 0; i < files.length; i++) {
@@ -240,10 +321,16 @@ public class FormMain extends JFrame {
 		}
 	}
 
+	/**
+	 * Open seach dialog.
+	 */
 	public void showDialogSearch() {
 		dialogSearch.setVisible(true);
 	}
 
+	/**
+	 * Open users dialog.
+	 */
 	public void showDialogUsers() {
 		String[] usersList = Users.getUsers().getUsersArray();
 
@@ -257,6 +344,9 @@ public class FormMain extends JFrame {
 		dialogUsers.setVisible(true);
 	}
 
+	/**
+	 * Open settings dialog.
+	 */
 	public void showDialogSettings() {
 		Settings settings = Settings.getSettings();
 
@@ -275,10 +365,16 @@ public class FormMain extends JFrame {
 		dialogSettings.setVisible(true);
 	}
 
+	/**
+	 * Open about dialog.
+	 */
 	public void showDialogAbout() {
 		dialogAbout.setVisible(true);
 	}
 
+	/**
+	 * Connect to network (only GUI).
+	 */
 	public void connect() {
 		menuFileDisconnect.setVisible(true);
 		menuFileConnect.setVisible(false);
@@ -287,6 +383,9 @@ public class FormMain extends JFrame {
 		toolBarConnect.setVisible(false);
 	}
 
+	/**
+	 * Disconnect from network (only GUI).
+	 */
 	public void disconnect() {
 		menuFileConnect.setVisible(true);
 		menuFileDisconnect.setVisible(false);
@@ -295,20 +394,37 @@ public class FormMain extends JFrame {
 		toolBarDisconnect.setVisible(false);
 	}
 
+	/**
+	 * Show error dialog.
+	 *
+	 * @param title
+	 * @param message
+	 */
 	public void showErrorDialog(String title, String message) {
 		JOptionPane.showMessageDialog(this, message, title, JOptionPane.ERROR_MESSAGE);
 	}
 
+	/**
+	 * Set blank form title.
+	 */
 	public void setFormTitle() {
 		setFormTitle("");
 	}
 
+	/**
+	 * Set form title.
+	 *
+	 * @param message
+	 */
 	public void setFormTitle(String message) {
 		if (formMain != null) {
 			formMain.setTitle(FileShare.NAME + " (" + FileShare.VERSION + ")" + (!message.isEmpty() ? " - " + message : ""));
 		}
 	}
 
+	/**
+	 * Create form a show it.
+	 */
 	public void createAndShow() {
 		formMain = new JFrame();
 
@@ -324,5 +440,4 @@ public class FormMain extends JFrame {
 
 		formMain.setVisible(true);
 	}
-
 }

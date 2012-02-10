@@ -1,13 +1,7 @@
 package fileshare.settings;
 
 import fileshare.FileShare;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,22 +18,42 @@ import org.xml.sax.InputSource;
 /**
  * Users (singleton).
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class Users {
-
+	/**
+	 * Singleton - Users instancec.
+	 */
 	private static Users usersInstance = null;
 
+	/**
+	 * File with users.
+	 */
 	private File fileUsers = null;
 
+	/**
+	 * List with users.
+	 */
 	private ArrayList<User> userList = null;
 
+	/**
+	 * Users tree.
+	 */
 	private DefaultTreeModel treeModel = null;
 
+	/**
+	 * Users tree root node.
+	 */
 	private DefaultMutableTreeNode rootNode = null;
 
+	/**
+	 * File to search.
+	 */
 	private ArrayList<OneFile> searchList = null;
 
+	/**
+	 * Initialize users.
+	 */
 	private Users() {
 		fileUsers = new File(FileShare.getAppDir() + "users.ini");
 
@@ -51,6 +65,11 @@ public class Users {
 		searchList = new ArrayList<OneFile>();
 	}
 
+	/**
+	 * Singleton - get Users instance.
+	 *
+	 * @return
+	 */
 	public static Users getUsers() {
 		if (usersInstance == null) {
 			usersInstance = new Users();
@@ -59,14 +78,17 @@ public class Users {
 		return usersInstance;
 	}
 
+	/**
+	 * Load users from file.
+	 * @return
+	 */
 	public boolean loadFromFile() {
 		if (fileUsers.exists()) {
 			BufferedReader input = null;
 			try {
 				input = new BufferedReader(new FileReader(fileUsers));
 
-				String line = "";
-
+				String line;
 				String name = "";
 				String address = "";
 				int port = 0;
@@ -110,7 +132,7 @@ public class Users {
 								continue;
 							}
 						} else if(key.equals("password")) {
-							password = Settings.decrypt(value);
+							password = Settings.decode(value);
 						}
 					}
 				}
@@ -135,6 +157,11 @@ public class Users {
 		}
 	}
 
+	/**
+	 * Save users to file.
+	 *
+	 * @return
+	 */
 	public boolean saveToFile() {
 		BufferedWriter output = null;
 		try {
@@ -147,7 +174,7 @@ public class Users {
 				output.write("Name=" + user.getName() + FileShare.NL);
 				output.write("Address=" + user.getAddress() + FileShare.NL);
 				output.write("Port=" + String.valueOf(user.getPort()) + FileShare.NL);
-				output.write("Password=" + Settings.encrypt(user.getPassword()) + FileShare.NL);
+				output.write("Password=" + Settings.encode(user.getPassword()) + FileShare.NL);
 				output.write(FileShare.NL);
 			}
 		} catch (IOException e) {
@@ -165,6 +192,15 @@ public class Users {
 		return true;
 	}
 
+	/**
+	 * Test user properties.
+	 *
+	 * @param name
+	 * @param address
+	 * @param port
+	 * @return
+	 * @throws Exception
+	 */
 	public boolean testUser(String name, String address, String port) throws Exception {
 		if (name.isEmpty()) {
 			throw new Exception("Name is required!");
@@ -189,6 +225,11 @@ public class Users {
 		return true;
 	}
 
+	/**
+	 * Add new user.
+	 *
+	 * @param user
+	 */
 	public void addUser(User user) {
 		userList.add(user);
 
@@ -198,14 +239,30 @@ public class Users {
 		reloadTreeView();
 	}
 
+	/**
+	 * Get user at index.
+	 *
+	 * @param index
+	 * @return
+	 */
 	public User get(int index) {
 		return userList.get(index);
 	}
 
+	/**
+	 * Get user at node.
+	 *
+	 * @param node
+	 * @return
+	 */
 	public User get(DefaultMutableTreeNode node) {
 		return get(rootNode.getIndex(node));
 	}
 
+	/**
+	 * Remove user at index.
+	 * @param index
+	 */
 	public void remove(int index) {
 		userList.remove(index);
 
@@ -214,6 +271,11 @@ public class Users {
 		reloadTreeView();
 	}
 
+	/**
+	 * Update user at index.
+	 *
+	 * @param index
+	 */
 	public void update(int index) {
 		treeModel.removeNodeFromParent((DefaultMutableTreeNode) rootNode.getChildAt(index));
 
@@ -223,6 +285,11 @@ public class Users {
 		reloadTreeView();
 	}
 
+	/**
+	 * Get users.
+	 *
+	 * @return
+	 */
 	public String[] getUsersArray() {
 		String[] users = new String[userList.size()];
 
@@ -233,22 +300,46 @@ public class Users {
 		return users;
 	}
 
+	/**
+	 * Get users as list.
+	 *
+	 * @return
+	 */
 	public ArrayList<User> getUsersList() {
 		return userList;
 	}
 
+	/**
+	 * Get users tree.
+	 *
+	 * @return
+	 */
 	public DefaultTreeModel getTreeModel() {
 		return treeModel;
 	}
 
+	/**
+	 * Reload users tree at user index.
+	 *
+	 * @param userIndex
+	 */
 	public void reloadTreeView(int userIndex) {
 		treeModel.reload(rootNode.getChildAt(userIndex));
 	}
 
+	/**
+	 * Reload all users tree.
+	 */
 	public void reloadTreeView() {
 		treeModel.reload();
 	}
 
+	/**
+	 * Parse user directories XML.
+	 *
+	 * @param userIndex
+	 * @param xml
+	 */
 	public void parseShareDirsXml(int userIndex, String xml) {
 		if (xml.isEmpty()) {
 			return;
@@ -278,6 +369,13 @@ public class Users {
 		}
 	}
 
+	/**
+	 * Parse user shared directory.
+	 *
+	 * @param dir
+	 * @param node
+	 * @param user
+	 */
 	private void parseDir(Directory dir, Node node, User user) {
 		NodeList nodes = node.getChildNodes();
 
@@ -296,6 +394,11 @@ public class Users {
 		}
 	}
 
+	/**
+	 * Remove shared directory from users tree.
+	 *
+	 * @param index
+	 */
 	public void removeDirsFromTree(int index) {
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) rootNode.getChildAt(index);
 
@@ -304,6 +407,12 @@ public class Users {
 		}
 	}
 
+	/**
+	 * Search for files.
+	 *
+	 * @param search
+	 * @param defaultTableModel
+	 */
 	public void search(String search, DefaultTableModel defaultTableModel) {
 		defaultTableModel.setRowCount(0);
 		searchList.clear();
@@ -318,6 +427,12 @@ public class Users {
 		}
 	}
 
+	/**
+	 * Search for file in directory.
+	 *
+	 * @param search
+	 * @param node
+	 */
 	private void searchDir(String search, DefaultMutableTreeNode node) {
 		if (node instanceof Directory) {
 			Directory dir = (Directory) node;
@@ -335,6 +450,12 @@ public class Users {
 		}
 	}
 
+	/**
+	 * Get one search result.
+	 *
+	 * @param index
+	 * @return
+	 */
 	public OneFile getSearch(int index) {
 		return searchList.get(index);
 	}

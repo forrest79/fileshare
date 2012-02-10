@@ -15,20 +15,37 @@ import java.util.ArrayList;
 /**
  * Check users status and gets file list.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class UsersThread implements Runnable {
-
+	/**
+	 * How often check users in seconds.
+	 */
 	private static final int TIME = 60;
 
+	/**
+	 * Is running?
+	 */
 	private boolean run = true;
 
+	/**
+	 * Main form.
+	 */
 	private FormMain formMain = null;
 
+	/**
+	 * Initialize users thred.
+	 *
+	 * @param formMain
+	 */
 	public UsersThread(FormMain formMain) {
 		this.formMain = formMain;
 	}
 
+	/**
+	 * Thread main function.
+	 */
+	@Override
 	public void run() {
 		while (run) {
 			ArrayList<User> users = Users.getUsers().getUsersList();
@@ -42,7 +59,7 @@ public class UsersThread implements Runnable {
 
 					if (user.isOnline()) {
 						output.write("ISALIVE\n");
-						output.write(Settings.encrypt(user.getPassword()) + "\n");
+						output.write(Settings.encode(user.getPassword()) + "\n");
 						output.flush();
 
 						String response = input.readLine();
@@ -53,7 +70,7 @@ public class UsersThread implements Runnable {
 						}
 					} else {
 						output.write("CONNECT\n");
-						output.write(Settings.encrypt(user.getPassword()) + "\n");
+						output.write(Settings.encode(user.getPassword()) + "\n");
 						output.flush();
 
 						String response = input.readLine();
@@ -61,7 +78,7 @@ public class UsersThread implements Runnable {
 							user.setOnlineStatus();
 
 							String xml = "";
-							String xmlLine = "";
+							String xmlLine;
 							while ((xmlLine = input.readLine()) != null) {
 								xml += xmlLine + "\n";
 							}
@@ -90,6 +107,9 @@ public class UsersThread implements Runnable {
 		}
 	}
 
+	/**
+	 * Stop checking.
+	 */
 	public void stop() {
 		run = false;
 

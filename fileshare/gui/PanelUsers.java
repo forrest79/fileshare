@@ -6,7 +6,7 @@ import javax.swing.JTextField;
 /**
  * Form for users.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class PanelUsers extends javax.swing.JPanel {
 

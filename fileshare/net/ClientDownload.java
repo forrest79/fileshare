@@ -4,32 +4,45 @@ import fileshare.FileShare;
 import fileshare.gui.FormMain;
 import fileshare.settings.OneFile;
 import fileshare.settings.Settings;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.net.Socket;
 
 /**
  * Download file from server.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class ClientDownload implements Runnable, ITransfer {
-
+	/**
+	 * Downloading file.
+	 */
 	private OneFile file = null;
 
+	/**
+	 * Is download canceled?
+	 */
 	private boolean cancel = false;
 
+	/**
+	 * Main form.
+	 */
 	private FormMain formMain = null;
 
+	/**
+	 * Initialize download file.
+	 *
+	 * @param file
+	 * @param formMain
+	 */
 	public ClientDownload(OneFile file, FormMain formMain) {
 		this.file = file;
 		this.formMain = formMain;
 	}
 
+	/**
+	 * Main thread function.
+	 */
+	@Override
 	public void run() {
 		try {
 			Socket socket = new Socket(file.getUser().getAddress(), file.getUser().getPort());
@@ -43,15 +56,15 @@ public class ClientDownload implements Runnable, ITransfer {
 				BufferedOutputStream fileOutput = new BufferedOutputStream(new FileOutputStream(downloadFile));
 
 				output.write("GET " + file.getPath() + "\n");
-				output.write(Settings.encrypt(file.getUser().getPassword()) + "\n");
+				output.write(Settings.encode(file.getUser().getPassword()) + "\n");
 				output.flush();
 
 				long fileSize = 0;
 
-				int i = 0;
 				long dataSize = 0;
 				boolean readResponse = true;
 				boolean error = false;
+				int i;
 				while(((i = inputData.read(data)) != -1) && !cancel) {
 					if (readResponse) {
 						readResponse = false;
@@ -59,7 +72,7 @@ public class ClientDownload implements Runnable, ITransfer {
 							int eol = data[2];
 
 							String size = "";
-							int x = 0;
+							int x;
 							for (x = 3; x < i; x++) {
 								if (data[x] == eol) {
 									break;
@@ -112,8 +125,11 @@ public class ClientDownload implements Runnable, ITransfer {
 		}
 	}
 
+	/**
+	 * Cancel download.
+	 */
+	@Override
 	public void cancel() {
 		cancel = true;
 	}
-
 }

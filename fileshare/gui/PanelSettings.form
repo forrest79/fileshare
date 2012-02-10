@@ -1,9 +1,9 @@
-<?xml version="1.1" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 
 <Form version="1.3" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
     <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-      <Dimension value="[530, 430]"/>
+      <Dimension value="[485, 410]"/>
     </Property>
   </Properties>
   <AuxValues>
@@ -47,7 +47,7 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="buttonChangeDir" alignment="0" pref="126" max="32767" attributes="1"/>
+                          <Component id="buttonChangeDir" alignment="0" max="32767" attributes="1"/>
                           <Group type="102" alignment="1" attributes="0">
                               <Component id="buttonAddDir" min="-2" pref="93" max="-2" attributes="1"/>
                               <EmptySpace max="-2" attributes="0"/>

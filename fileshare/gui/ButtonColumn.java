@@ -4,11 +4,7 @@ import fileshare.net.Transfers;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.AbstractCellEditor;
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
@@ -16,14 +12,35 @@ import javax.swing.table.TableColumnModel;
 /**
  * Button in table row.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, TableCellEditor, ActionListener {
+	/**
+	 * Table.
+	 */
 	JTable table;
+
+	/**
+	 * Button in cell.
+	 */
 	JButton renderButton;
+
+	/**
+	 * Edit button.
+	 */
 	JButton editButton;
+
+	/**
+	 * Text input.
+	 */
 	String text;
 
+	/**
+	 * Initialize button column.
+	 *
+	 * @param table
+	 * @param column
+	 */
 	public ButtonColumn(JTable table, int column)	{
 		super();
 		this.table = table;
@@ -38,6 +55,18 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 		columnModel.getColumn(column).setCellEditor(this);
 	}
 
+	/**
+	 * Get table cell renderer component.
+	 *
+	 * @param table
+	 * @param value
+	 * @param isSelected
+	 * @param hasFocus
+	 * @param row
+	 * @param column
+	 * @return
+	 */
+	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
 		if (hasFocus)
 		{
@@ -56,16 +85,39 @@ class ButtonColumn extends AbstractCellEditor implements TableCellRenderer, Tabl
 		return renderButton;
 	}
 
+	/**
+	 * Get table cell editor component.
+	 *
+	 * @param table
+	 * @param value
+	 * @param isSelected
+	 * @param row
+	 * @param column
+	 * @return
+	 */
+	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		text = (value == null) ? "" : value.toString();
 		editButton.setText(text);
 		return editButton;
 	}
 
+	/**
+	 * Get cell editor value.
+	 *
+	 * @return
+	 */
+	@Override
 	public Object getCellEditorValue() {
 		return text;
 	}
 
+	/**
+	 * Call at action performed.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		fireEditingStopped();

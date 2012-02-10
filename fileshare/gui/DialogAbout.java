@@ -9,9 +9,15 @@ import javax.swing.JDialog;
 /**
  * Dialog about.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class DialogAbout extends JDialog {
+	/**
+	 * Initialize dialog.
+	 *
+	 * @param owner
+	 * @param modal
+	 */
 	public DialogAbout(Frame owner, boolean modal) {
 		super(owner, modal);
 
@@ -26,10 +32,16 @@ public class DialogAbout extends JDialog {
 		add(panelAbout);
 	}
 
+	/**
+	 * Close dialog.
+	 */
 	public void close() {
 		this.setVisible(false);
 	}
 
+	/**
+	 * Perform send mail action.
+	 */
 	public void sendMail() {
 		if (Desktop.getDesktop().isSupported(Desktop.Action.MAIL)) {
 			try {

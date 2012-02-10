@@ -2,34 +2,41 @@ package fileshare.net;
 
 import fileshare.FileShare;
 import fileshare.settings.Settings;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.Socket;
 
 /**
  * Server response.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class ServerResponse implements Runnable, ITransfer {
+	/**
+	 * Socket.
+	 */
 	private Socket socket;
 
+	/**
+	 * Is canceled.
+	 */
 	private boolean cancel = false;
 
+	/**
+	 * Initialize server response.
+	 *
+	 * @param socket
+	 */
 	public ServerResponse(Socket socket) {
 		this.socket = socket;
 	}
 
+	/**
+	 * Main thread function.
+	 */
+	@Override
 	public void run() {
 		BufferedReader input = null;
 		BufferedOutputStream output = null;
-		String clientMessage = "";
-		String password = "";
 
 		if (FileShare.DEBUG) {
 			System.out.println("Server [" + socket.getRemoteSocketAddress() + " | Client connect]");
@@ -39,9 +46,9 @@ public class ServerResponse implements Runnable, ITransfer {
 			input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 			output = new BufferedOutputStream(socket.getOutputStream());
 
-			clientMessage = input.readLine();
+			String clientMessage = input.readLine();
 
-			password = Settings.decrypt(input.readLine());
+			String password = Settings.decode(input.readLine());
 			if (FileShare.DEBUG) {
 				System.out.println("Server [" + socket.getRemoteSocketAddress() + " | " + password + "] " + clientMessage);
 			}
@@ -77,9 +84,9 @@ public class ServerResponse implements Runnable, ITransfer {
 									output.write((String.valueOf(size) + "\n").getBytes());
 
 									BufferedInputStream fileInput = new BufferedInputStream(new FileInputStream(dir + slash + file));
-									int i = 0;
 									byte[] data = new byte[16384];
 									long dataSize = 0;
+									int i;
 									while(((i = fileInput.read(data)) != -1) && !cancel) {
 										dataSize += i;
 										output.write(data, 0, i);
@@ -134,6 +141,10 @@ public class ServerResponse implements Runnable, ITransfer {
 		}
 	}
 
+	/**
+	 * Close thread.
+	 */
+	@Override
 	public void cancel() {
 		cancel = true;
 	}

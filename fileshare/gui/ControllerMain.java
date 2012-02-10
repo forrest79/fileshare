@@ -20,18 +20,34 @@ import javax.swing.event.TreeSelectionListener;
 /**
  * Main window controller.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 class ControllerMain implements ActionListener, TreeSelectionListener, MouseListener, PropertyChangeListener {
-
+	/**
+	 * Main form.
+	 */
 	private FormMain formMain = null;
 
+	/**
+	 * Directory with files to download.
+	 */
 	private Directory dir = null;
 
+	/**
+	 * Initialize controller.
+	 *
+	 * @param formMain
+	 */
 	public ControllerMain(FormMain formMain) {
 		this.formMain = formMain;
 	}
 
+	/**
+	 * Call on action performed.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equalsIgnoreCase(FormMain.COMMAND_CONNECT)) {
 			try {
@@ -61,11 +77,19 @@ class ControllerMain implements ActionListener, TreeSelectionListener, MouseList
 			formMain.showDialogUsers();
 		} else if (e.getActionCommand().equalsIgnoreCase(FormMain.COMMAND_SETTINGS)) {
 			formMain.showDialogSettings();
+		} else if (e.getActionCommand().equalsIgnoreCase(FormMain.COMMAND_END)) {
+			System.exit(0);
 		} else if (e.getActionCommand().equalsIgnoreCase(FormMain.COMMAND_ABOUT)) {
 			formMain.showDialogAbout();
 		}
 	}
 
+	/**
+	 * Call on value changed in tree.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void valueChanged(TreeSelectionEvent e) {
 		JTree tree = (JTree) e.getSource();
 
@@ -80,6 +104,12 @@ class ControllerMain implements ActionListener, TreeSelectionListener, MouseList
 		}
 	}
 
+	/**
+	 * Call on mouse clicked in table.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
 			JTable target = (JTable) e.getSource();
@@ -88,22 +118,52 @@ class ControllerMain implements ActionListener, TreeSelectionListener, MouseList
 		}
 	}
 
+	/**
+	 * Call on mouse button pressed.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mousePressed(MouseEvent e) {
-		//throw new UnsupportedOperationException("Not supported yet.");
+		// Not supported here...
 	}
 
+	/**
+	 * Call on mouse button released.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mouseReleased(MouseEvent e) {
-		//throw new UnsupportedOperationException("Not supported yet.");
+		// Not supported here...
 	}
 
+	/**
+	 * Call on mouse cursor entered.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mouseEntered(MouseEvent e) {
-		//throw new UnsupportedOperationException("Not supported yet.");
+		// Not supported here...
 	}
 
+	/**
+	 * Call on mouse cursor exited.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mouseExited(MouseEvent e) {
-		//throw new UnsupportedOperationException("Not supported yet.");
+		// Not supported here...
 	}
 
+	/**
+	 * Call on property changed in split pane (horizontal and vertical).
+	 *
+	 * @param evt
+	 */
+	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		JSplitPane splitPane = (JSplitPane) evt.getSource();
 

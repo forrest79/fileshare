@@ -14,12 +14,20 @@ import javax.swing.*;
 /**
  * Dialog for file search.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class DialogSearch extends JDialog implements MouseListener {
-
+	/**
+	 * Table with search results.
+	 */
 	private TableModelSearch tableModelSearch = null;
 
+	/**
+	 * Initialize search dialog.
+	 *
+	 * @param owner
+	 * @param modal
+	 */
 	public DialogSearch(Frame owner, boolean modal) {
 		super(owner, modal);
 
@@ -54,6 +62,7 @@ public class DialogSearch extends JDialog implements MouseListener {
 
 		JButton buttonSearch = new JButton("Search");
 		buttonSearch.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				Users.getUsers().search(txtSearch.getText(), tableModelSearch);
 			}
@@ -62,6 +71,7 @@ public class DialogSearch extends JDialog implements MouseListener {
 
 		JButton buttonClose = new JButton("Close");
 		buttonClose.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 			}
@@ -71,6 +81,12 @@ public class DialogSearch extends JDialog implements MouseListener {
 		add(top, BorderLayout.PAGE_START);
 	}
 
+	/**
+	 * Call on mouse clicked in table.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() == 2) {
 			JTable target = (JTable) e.getSource();
@@ -79,19 +95,43 @@ public class DialogSearch extends JDialog implements MouseListener {
 		}
 	}
 
+	/**
+	 * Call on mouse button pressed.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mousePressed(MouseEvent e) {
-		//
+		// Not implemented here...
 	}
 
+	/**
+	 * Call on mouse button released.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mouseReleased(MouseEvent e) {
-		//
+		// Not implemented here...
 	}
 
+	/**
+	 * Call on mouse cursor entered.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mouseEntered(MouseEvent e) {
-		//
+		// Not implemented here...
 	}
 
+	/**
+	 * Call on mouse cursor exited.
+	 *
+	 * @param e
+	 */
+	@Override
 	public void mouseExited(MouseEvent e) {
-		//
+		// Not implemented here...
 	}
 }

@@ -13,20 +13,42 @@ import javax.swing.tree.DefaultTreeCellRenderer;
  * @author Jakub Trmota
  */
 public class TreeRendererUsers extends DefaultTreeCellRenderer {
-
+	/**
+	 * Offline icon.
+	 */
 	ImageIcon iconOffline = null;
 
+	/**
+	 * Online icon.
+	 */
 	ImageIcon iconOnline = null;
 
+	/**
+	 * Folder icon.
+	 */
 	ImageIcon iconFolder = null;
 
-
+	/**
+	 * Initialize users tree.
+	 */
 	public TreeRendererUsers() {
 		iconOffline = new ImageIcon(getClass().getResource("icon/icon-user-offline.png"));
 		iconOnline = new ImageIcon(getClass().getResource("icon/icon-user-online.png"));
 		iconFolder = new ImageIcon(getClass().getResource("icon/icon-folder.png"));
 	}
 
+	/**
+	 * Get tree cell renderer component.
+	 *
+	 * @param tree
+	 * @param value
+	 * @param selected
+	 * @param expanded
+	 * @param leaf
+	 * @param row
+	 * @param hasFocus
+	 * @return
+	 */
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean selected, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 		super.getTreeCellRendererComponent(tree, value, selected, expanded, leaf, row, hasFocus);

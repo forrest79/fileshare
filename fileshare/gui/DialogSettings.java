@@ -11,18 +11,35 @@ import javax.swing.JOptionPane;
 /**
  * Dialog for settings.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class DialogSettings extends JDialog {
-	
+	/**
+	 * Settings panel.
+	 */
 	private PanelSettings panelSettings = null;
 
+	/**
+	 * Share directories list.
+	 */
 	private DefaultListModel modelShareDirs = null;
 
+	/**
+	 * Directory file picker.
+	 */
 	private JFileChooser dirChooser = null;
 
+	/**
+	 * If regenerate share directories.
+	 */
 	private boolean regenerateShareDirs = false;
 
+	/**
+	 * Initialize settings dialog.
+	 *
+	 * @param owner
+	 * @param modal
+	 */
 	public DialogSettings(Frame owner, boolean modal) {
 		super(owner, modal);
 
@@ -44,18 +61,33 @@ public class DialogSettings extends JDialog {
 		dirChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	}
 
+	/**
+	 * Close settings dialog.
+	 */
 	public void close() {
 		this.setVisible(false);
 	}
 
+	/**
+	 * Get settings panel.
+	 *
+	 * @return
+	 */
 	public PanelSettings getPanel() {
 		return panelSettings;
 	}
 
+	/**
+	 * Get share directories list.
+	 * @return
+	 */
 	public DefaultListModel getModelShareDirs() {
 		return modelShareDirs;
 	}
 
+	/**
+	 * Save settings.
+	 */
 	public void save() {
 		try {
 			Settings settings = Settings.getSettings();
@@ -95,6 +127,9 @@ public class DialogSettings extends JDialog {
 		close();
 	}
 
+	/**
+	 * Add share directory.
+	 */
 	public void addShareDir() {
 		dirChooser.setAcceptAllFileFilterUsed(false);
 
@@ -104,6 +139,9 @@ public class DialogSettings extends JDialog {
 		}
 	}
 
+	/**
+	 * Remove share directory.
+	 */
 	public void removeShareDir() {
 		if ((panelSettings.getListDirs().getSelectedIndex() > -1) && (JOptionPane.showConfirmDialog(this, "Remove directory '" + modelShareDirs.elementAt(panelSettings.getListDirs().getSelectedIndex()).toString() + "'?", "Remove directory?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 			modelShareDirs.remove(panelSettings.getListDirs().getSelectedIndex());
@@ -111,6 +149,9 @@ public class DialogSettings extends JDialog {
 		}
 	}
 
+	/**
+	 * Choose directory to download in.
+	 */
 	public void chooseDownloadDir() {
 		dirChooser.setAcceptAllFileFilterUsed(false);
 
@@ -119,6 +160,9 @@ public class DialogSettings extends JDialog {
 		}
 	}
 
+	/**
+	 * Generate share directories list.
+	 */
 	public void generateShareList() {
 		if (JOptionPane.showConfirmDialog(this, "Do you really want to regenerate XML file list?\nIt can take a minute...", "Regenerate file list?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
 			if (!Settings.getSettings().generateShareDirsXml()) {

@@ -11,14 +11,24 @@ import java.net.SocketTimeoutException;
 /**
  * Server implemantation.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class ServerThread implements Runnable {
-
+	/**
+	 * Is running.
+	 */
 	private boolean run = true;
 
+	/**
+	 * Server socket.
+	 */
 	private ServerSocket server;
 
+	/**
+	 * Initialize server thread.
+	 *
+	 * @throws Exception
+	 */
 	public ServerThread() throws Exception {
 		try {
 			server = new ServerSocket(Settings.getSettings().getPort());
@@ -30,6 +40,10 @@ public class ServerThread implements Runnable {
 		}
 	}
 
+	/**
+	 * Main thread function.
+	 */
+	@Override
 	public void run() {
 		Socket socket;
 		Thread thread;
@@ -43,7 +57,7 @@ public class ServerThread implements Runnable {
 				thread.setDaemon(true);
 				thread.start();
 			} catch (SocketTimeoutException ste) {
-				// STE
+				// Signals that a timeout has occurred on a socket read or accept.
 			} catch (IOException ex) {
 				System.err.println(ex);
 			}
@@ -51,7 +65,7 @@ public class ServerThread implements Runnable {
 		if (FileShare.DEBUG) {
 			System.out.println("Server - disconnect...");
 		}
-		
+
 		try {
 			server.close();
 		} catch (IOException ex) {
@@ -59,8 +73,10 @@ public class ServerThread implements Runnable {
 		}
 	}
 
+	/**
+	 * Close server.
+	 */
 	public void disconnect() {
 		run = false;
 	}
-
 }

@@ -7,22 +7,52 @@ import fileshare.settings.Users;
 /**
  * Main class.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class FileShare {
-
+	/**
+	 * Is debug?
+	 */
 	public static final boolean DEBUG = false;
 
+	/**
+	 * New line separator from system.
+	 */
 	public static final String NL = System.getProperty("line.separator");
+
+	/**
+	 * Slash.
+	 */
 	public static String SLASH = "/";
 
+	/**
+	 * Application name.
+	 */
 	public static final String NAME = "FileShare";
-	public static final double VERSION = 1.00;
+
+	/**
+	 * Application version.
+	 */
+	public static final double VERSION = 1.1;
+
+	/**
+	 * Application developer.
+	 */
+	public static final String DEVELOPER = "Jakub Trmota";
+
+	/**
+	 * Application developer email.
+	 */
 	public static final String EMAIL = "info@forrest79.net";
 
+	/**
+	 * Application path.
+	 */
 	private static String appPath = "";
 
 	/**
+	 * Application main method.
+	 *
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
@@ -41,12 +71,18 @@ public class FileShare {
 		}
 
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
-				public void run() {
-						new FormMain().createAndShow();
-				}
+			@Override
+			public void run() {
+				new FormMain().createAndShow();
+			}
 		});
 	}
 
+	/**
+	 * Get application dir.
+	 *
+	 * @return
+	 */
 	public static String getAppDir() {
 		if (appPath.equals("")) {
 			String path = System.getProperty("user.dir");

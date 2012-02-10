@@ -5,21 +5,37 @@ import fileshare.settings.Settings;
 import fileshare.settings.User;
 import fileshare.settings.Users;
 import java.awt.Frame;
-import javax.swing.*;
+import javax.swing.DefaultListModel;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  * Dialog for users.
  *
- * @author Jakub Trmota (Forrest79)
+ * @author Jakub Trmota | Forrest79
  */
 public class DialogUsers extends JDialog {
-
+	/**
+	 * Users panel.
+	 */
 	PanelUsers panelUsers = null;
-	
+
+	/**
+	 * Users list.
+	 */
 	private DefaultListModel modelUsers = null;
 
+	/**
+	 * Edit user index (-1 no user is edited).
+	 */
 	private int edit = -1;
 
+	/**
+	 * Initialize users dialog.
+	 *
+	 * @param owner
+	 * @param modal
+	 */
 	public DialogUsers(Frame owner, boolean modal) {
 		super(owner, modal);
 
@@ -37,6 +53,9 @@ public class DialogUsers extends JDialog {
 		add(panelUsers);
 	}
 
+	/**
+	 * Set blank dialog values.
+	 */
 	public void blank() {
 		edit = -1;
 
@@ -46,13 +65,16 @@ public class DialogUsers extends JDialog {
 		panelUsers.getTxtPassword().setText("");
 	}
 
+	/**
+	 * Save user data or add new user.
+	 */
 	public void save() {
 		try {
 			Users users = Users.getUsers();
 
 			if (users.testUser(panelUsers.getTxtName().getText(), panelUsers.getTxtAddress().getText(), panelUsers.getTxtPort().getText())) {
 
-				User user = null;
+				User user;
 				if (edit == -1) { // New user
 					user = new User();
 				} else { // Edit user
@@ -83,11 +105,12 @@ public class DialogUsers extends JDialog {
 			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(this, e.getMessage(), "File save error", JOptionPane.ERROR_MESSAGE);
-
-			return;
 		}
 	}
 
+	/**
+	 * Change data in panel.
+	 */
 	public void change() {
 		if (panelUsers.getListUsers().getSelectedIndex() > -1) {
 			edit = panelUsers.getListUsers().getSelectedIndex();
@@ -101,6 +124,9 @@ public class DialogUsers extends JDialog {
 		}
 	}
 
+	/**
+	 * Remove user.
+	 */
 	public void remove() {
 		if ((panelUsers.getListUsers().getSelectedIndex() > -1) && (JOptionPane.showConfirmDialog(this, "Remove user '" + modelUsers.elementAt(panelUsers.getListUsers().getSelectedIndex()).toString() + "'?", "Remove user?", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION)) {
 			modelUsers.remove(edit);
@@ -116,15 +142,28 @@ public class DialogUsers extends JDialog {
 			blank();
 		}
 	}
-	
+
+	/**
+	 * Close user dialog.
+	 */
 	public void close() {
 		this.setVisible(false);
 	}
-	
+
+	/**
+	 * Get user panel.
+	 *
+	 * @return
+	 */
 	public PanelUsers getPanel() {
 		return panelUsers;
 	}
 
+	/**
+	 * Get users list.
+	 *
+	 * @return
+	 */
 	public DefaultListModel getModelUsers() {
 		return modelUsers;
 	}
