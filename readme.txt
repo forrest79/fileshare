@@ -6,7 +6,7 @@ File sharing via network written in Java as school project. Share your files wit
 
 LICENSE
 =======
-FileShare is distributed under GPL license.
+FileShare is distributed under BSD license. See license.txt.
 
 
 https://github.com/forrest79/fileshare
